@@ -1,0 +1,148 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// #######################################################################
+model User {
+  id         String           @id @default(uuid())
+  fullName   String
+  email      String           @unique
+  password   String
+  bitrthDate DateTime         @db.Date
+  image      String?          @default("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.vecteezy.com%2Fpng%2F11675382-man-avatar-image-for-profile&psig=AOvVaw13jl7u6f6SEI9kx-79C7j7&ust=1703065759489000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCPCi3sWcm4MDFQAAAAAdAAAAABAD")
+  token      String
+  followers  Follow[]
+  bComments  BrandComment[]
+  cComments  CreatorComment[]
+  favorite   Favorite[]
+  wallets    Wallet[]
+}
+
+model Wallet {
+  id String @id @default(uuid())
+
+  User   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  Product   Product @relation(fields: [productId], references: [id])
+  productId String
+}
+
+model Product {
+  id           String     @id @default(uuid())
+  name         String
+  image        String[]
+  description  String
+  price        Int
+  category     String
+  quantity     Int
+  reference    String
+  status       Boolean
+  wallets      Wallet[]
+  favorites    Favorite[]
+  Collection   Collection @relation(fields: [collectionId], references: [id])
+  collectionId String
+}
+
+model Brand {
+  id         String       @id @default(uuid())
+  fullName   String
+  email      String       @unique
+  password   String
+  image      String?      @default("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.vecteezy.com%2Fpng%2F11675382-man-avatar-image-for-profile&psig=AOvVaw13jl7u6f6SEI9kx-79C7j7&ust=1703065759489000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCPCi3sWcm4MDFQAAAAAdAAAAABAD")
+  cover      String?      @default("https://www.google.com/url?sa=i&url=https%3A%2F%2Fimagekit.io%2Fblog%2Fhow-to-resize-image-in-html%2F&psig=AOvVaw0b5mwqSTBp6PX8wITT6hj0&ust=1703065630198000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCMiysYWcm4MDFQAAAAAdAAAAABAD")
+  bio        String?      @db.Text
+  token      String
+  follow     Follow[]
+  postBrand  PostBrand[]
+  collection Collection[]
+  Creator    Creator[]
+}
+
+model PostBrand {
+  id    String   @id @default(uuid())
+  title String   @db.Text
+  image String
+  date  DateTime @db.Timestamp()
+
+  brandId      String?
+  Brand        Brand?         @relation(fields: [brandId], references: [id])
+  commnetBrand BrandComment[]
+}
+
+model Collection {
+  id        String    @id @default(uuid())
+  name      String    @unique
+  product   Product[]
+  Brand     Brand?    @relation(fields: [brandId], references: [id])
+  brandId   String?
+  Creator   Creator?  @relation(fields: [creatorId], references: [id])
+  creatorId String?
+}
+
+model Creator {
+  id         String        @id @default(uuid())
+  fullName   String
+  email      String        @unique
+  password   String
+  image      String?       @default("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.vecteezy.com%2Fpng%2F11675382-man-avatar-image-for-profile&psig=AOvVaw13jl7u6f6SEI9kx-79C7j7&ust=1703065759489000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCPCi3sWcm4MDFQAAAAAdAAAAABAD")
+  cover      String?       @default("https://www.google.com/url?sa=i&url=https%3A%2F%2Fimagekit.io%2Fblog%2Fhow-to-resize-image-in-html%2F&psig=AOvVaw0b5mwqSTBp6PX8wITT6hj0&ust=1703065630198000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCMiysYWcm4MDFQAAAAAdAAAAABAD")
+  bio        String?       @db.Text
+  token      String
+  collection Collection[]
+  posts      PostCreator[]
+  Brand      Brand         @relation(fields: [brandId], references: [id])
+  brandId    String
+}
+
+model Follow {
+  id      String  @id @default(uuid())
+  User    User?   @relation(fields: [userId], references: [id])
+  userId  String?
+  Brand   Brand?  @relation(fields: [brandId], references: [id])
+  brandId String?
+}
+
+model Favorite {
+  id String @id @default(uuid())
+
+  User   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  Product   Product @relation(fields: [productId], references: [id])
+  productId String
+}
+
+model CreatorComment {
+  id     String  @id @default(uuid())
+  body   String  @db.Text
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String?
+}
+
+model PostCreator {
+  id    String @id @default(uuid())
+  title String
+  image String @db.Text
+
+  Creator   Creator? @relation(fields: [creatorId], references: [id])
+  creatorId String?
+}
+
+model BrandComment {
+  id     String  @id @default(uuid())
+  body   String  @db.Text
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String?
+
+  PostBrand   PostBrand? @relation(fields: [postBrandId], references: [id])
+  postBrandId String?
+}
