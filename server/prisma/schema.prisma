@@ -46,7 +46,7 @@ model Product {
   reference    String
   status       Boolean
   wallets      Wallet[]
-  favorites    Favorite[]
+  favorite    Favorite[]
   Collection   Collection @relation(fields: [collectionId], references: [id])
   collectionId String
 }
