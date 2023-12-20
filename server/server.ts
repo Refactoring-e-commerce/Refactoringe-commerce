@@ -1,5 +1,7 @@
 import express from "express";
 import cors from "cors";
+import collectionRoute from './routes/Collection_route';
+import BrandRoute from './routes/Brand_route';
 
 import walletRout from './routes/wallet_route'
 import favoriteRout from './routes/favorite_route'
@@ -22,6 +24,11 @@ app.use("/Creator",CreatorRoute)
 app.use("/Product",ProductRoute)
 app.use("/PostCreator", PostCreator)
 app.use("/CommentCreator",CommentCreator)
+
+
+
+app.use('/collection',collectionRoute)
+app.use('/brand',BrandRoute)
 
 app.listen(PORT, () => {
   console.log(`server listening on http://localhost:${PORT}`);
