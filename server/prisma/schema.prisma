@@ -18,7 +18,6 @@ model User {
   password   String
   bitrthDate DateTime         @db.Date
   image      String?          @default("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.vecteezy.com%2Fpng%2F11675382-man-avatar-image-for-profile&psig=AOvVaw13jl7u6f6SEI9kx-79C7j7&ust=1703065759489000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCPCi3sWcm4MDFQAAAAAdAAAAABAD")
-  token      String
   followers  Follow[]
   bComments  BrandComment[]
   cComments  CreatorComment[]
@@ -60,7 +59,6 @@ model Brand {
   image      String?      @default("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.vecteezy.com%2Fpng%2F11675382-man-avatar-image-for-profile&psig=AOvVaw13jl7u6f6SEI9kx-79C7j7&ust=1703065759489000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCPCi3sWcm4MDFQAAAAAdAAAAABAD")
   cover      String?      @default("https://www.google.com/url?sa=i&url=https%3A%2F%2Fimagekit.io%2Fblog%2Fhow-to-resize-image-in-html%2F&psig=AOvVaw0b5mwqSTBp6PX8wITT6hj0&ust=1703065630198000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCMiysYWcm4MDFQAAAAAdAAAAABAD")
   bio        String?      @db.Text
-  token      String
   follow     Follow[]
   postBrand  PostBrand[]
   collection Collection[]
@@ -96,7 +94,6 @@ model Creator {
   image      String?       @default("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.vecteezy.com%2Fpng%2F11675382-man-avatar-image-for-profile&psig=AOvVaw13jl7u6f6SEI9kx-79C7j7&ust=1703065759489000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCPCi3sWcm4MDFQAAAAAdAAAAABAD")
   cover      String?       @default("https://www.google.com/url?sa=i&url=https%3A%2F%2Fimagekit.io%2Fblog%2Fhow-to-resize-image-in-html%2F&psig=AOvVaw0b5mwqSTBp6PX8wITT6hj0&ust=1703065630198000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCMiysYWcm4MDFQAAAAAdAAAAABAD")
   bio        String?       @db.Text
-  token      String
   collection Collection[]
   posts      PostCreator[]
   Brand      Brand         @relation(fields: [brandId], references: [id])
