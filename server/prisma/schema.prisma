@@ -43,7 +43,7 @@ model Product {
   description  String
   price        Int
   category     String
-  quantity     Int
+  quantity     Int  
   reference    String
   status       Boolean
   wallets      Wallet[]
