@@ -1,6 +1,7 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { NextAuthProvider } from "./providers";
+// import Navbar from "./Components/navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,11 +19,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className + " flex flex-row"}>
         <NextAuthProvider>
+        
           {children}
         </NextAuthProvider>
       </body>
     </html>
-  )
+  );
 }
 
 

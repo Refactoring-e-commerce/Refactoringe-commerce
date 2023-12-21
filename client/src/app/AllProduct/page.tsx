@@ -1,16 +1,15 @@
-'use client'
-import {MyContext,MyContextType} from '../context/_MyContext'
-import { useContext } from 'react';
-const getAllProduct = async () => {
-    const res = await fetch ("http://localhost:8080/Product/product")
-    return res.json()
-};
+"use client";
+import { getAllproduct } from "../utils/useApi";
 
-export default async function Allproduct() {
-  const { user, setUser } = useContext<MyContextType>(MyContext);
-  console.log(user);
-  
-  const product = await getAllProduct();
+// import { Error } from "./error";
+// import { Loading } from "./loading";
+
+const AllProduct = () => {
+  const { data } = getAllproduct();
+  // const data: string[] = [];
+  console.log(data);
+  // if (isLoading) return <h1>loading</h1>;
+  // if (isError) return <h1>error</h1>;
 
   return (
     <div className="w-3/4 p-4 ">
@@ -35,7 +34,7 @@ export default async function Allproduct() {
       <br />
       <br />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-        {product.map((product: any) => (
+        {data?.map((product: any) => (
           <div
             key={product.id}
             className={`p-2 rounded-md shadow-md transition-transform transform bg-[#ffffff1a] hover:bg-transparent hover:scale-105 hover:opacity-80`}
@@ -77,3 +76,4 @@ export default async function Allproduct() {
   );
 };
 
+export default AllProduct;
