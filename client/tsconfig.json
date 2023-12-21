@@ -19,7 +19,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/app/*"]
+      "@": ["./src/app/*"],
+      "*": ["./client/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/[auth]/sign-in"],
