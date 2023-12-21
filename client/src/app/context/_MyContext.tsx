@@ -5,14 +5,14 @@ import { createContext, useContext, useState } from "react";
 type ContextProvider = {
   children: React.ReactNode;
 };
-type MyContext = {
+export type MyContextType = {
   user: string;
   setUser: React.Dispatch<React.SetStateAction<string>>;
 };
-export const MyContext = createContext<MyContext | null>(null);
+export const MyContext = createContext<MyContextType | null>(null);
 
 export default function ContextProvider({ children }: ContextProvider) {
-  const [user, setUser] = useState<string>("");
+  const [user, setUser] = useState<string>("test");
   return (
     <MyContext.Provider value={{ user, setUser }}>
       {children}
