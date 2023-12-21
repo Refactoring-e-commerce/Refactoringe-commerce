@@ -21,7 +21,7 @@ model User {
   followers  Follow[]
   bComments  BrandComment[]
   cComments  CreatorComment[]
-  favorites   Favorite[]
+  favorite   Favorite[]
   wallets    Wallet[]
 }
 
