@@ -1,12 +1,21 @@
 interface Brand {
   id: String;
-  fullName:   String;
-  email:      String ;
-  password :  String;
-  image:     String;
-  cover:      String;
-  bio:       String
+  fullName: String;
+  email: String;
+  password: String;
+  image: String;
+  cover: String;
+  bio: String;
 }
+
+interface User {
+  id: String;
+  fullName: String;
+  email: String;
+  password: String;
+  birthDate: String;
+}
+
 interface Product {
   id: String;
   name :       String;
@@ -19,7 +28,3 @@ interface Product {
   status     :  Boolean;
 }
 
-interface Collection {
-  id: String ;   
-  name: String ;   
-}

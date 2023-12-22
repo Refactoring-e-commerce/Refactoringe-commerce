@@ -1,5 +1,9 @@
 node_modules
 # Keep environment variables out of version control
 .env
+.package.json
+.package-locck.json
 
 pnpm-lock.yaml
+package.json
+package-lock.json
