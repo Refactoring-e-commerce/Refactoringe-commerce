@@ -31,7 +31,7 @@ export const getFavoritesById = async (req: Request, res: Response): Promise<voi
 };
 
 export const addProductToFav = async (req: Request, res: Response): Promise<void> => {
-    const { userId, prodId } = req.body;
+    const { userId, prodId } = req.params;
 
     try {
         const user = await prisma.user.findUnique({
@@ -67,11 +67,12 @@ export const addProductToFav = async (req: Request, res: Response): Promise<void
 };
 
 export const deleteFromFav = async (req: Request, res: Response): Promise<void> => {
-    const { userId, prodId } = req.body;
+    const {userId,prodId} = req.params;
+
 
     try {
         const user = await prisma.user.findUnique({
-            where: { id: userId },
+            where:{id:userId},
         });
 
         if (!user) {
@@ -80,7 +81,7 @@ export const deleteFromFav = async (req: Request, res: Response): Promise<void> 
         }
 
         const productToDelete = await prisma.product.findUnique({
-            where: { id: prodId },
+            where:{id:prodId},
         });
 
         if (!productToDelete) {

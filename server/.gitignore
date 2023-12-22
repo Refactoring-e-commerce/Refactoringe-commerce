@@ -3,3 +3,7 @@ node_modules
 .env
 .package.json
 .package-locck.json
+
+pnpm-lock.yaml
+package.json
+package-lock.json

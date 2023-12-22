@@ -53,7 +53,7 @@ export const deletePost = async (req: Request, res: Response): Promise<void> => 
       where: {
         id: postId,
       },
-    });
+    })
     res.status(200).json(deletedPost);
   } catch (error) {
     console.error(error);

@@ -10,7 +10,7 @@ type Props = {
 export const NextAuthProvider = ({ children }: Props) => {
   return (
     <QueryClientProvider client={queryClient}>
-        {children}
+      {children};
     </QueryClientProvider>
   );
 };
