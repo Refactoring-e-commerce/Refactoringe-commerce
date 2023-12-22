@@ -1,5 +1,7 @@
 
+
 import { useQuery, useMutation } from "@tanstack/react-query";
+
 export const getAllproduct = () => {
   const query = useQuery<Product[]>({
     queryKey: ["product"],
