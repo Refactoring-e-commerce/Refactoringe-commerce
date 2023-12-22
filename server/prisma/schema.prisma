@@ -47,7 +47,7 @@ model Product {
   reference    String
   status       Boolean
   wallets      Wallet[]
-  favorite    Favorite[]
+  favorite     Favorite[]
   Collection   Collection @relation(fields: [collectionId], references: [id])
   collectionId String
 }
@@ -97,8 +97,8 @@ model Creator {
   bio        String?       @db.Text
   collection Collection[]
   posts      PostCreator[]
-  Brand      Brand         @relation(fields: [brandId], references: [id])
-  brandId    String
+  Brand      Brand?        @relation(fields: [brandId], references: [id])
+  brandId    String?
 }
 
 model Follow {
