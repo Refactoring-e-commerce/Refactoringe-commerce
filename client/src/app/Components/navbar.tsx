@@ -1,4 +1,98 @@
 
+
+import Link from "next/link";
+
+interface MyComponentProps {
+  // Define the props here if there are any
+}
+
+function MyComponent(props: MyComponentProps) {
+  return (
+    <div className="flex items-stretch justify-between gap-11 max-md:flex-wrap mt-5">
+      <div className="flex items-start center justify-between gap-10 px-5 max-md:max-w-full max-md:flex-wrap">
+        <div className="text-lime-600 text-4xl font-bold self-center whitespace-nowrap my-auto">
+          Logo
+        </div>
+        <div className="self-stretch flex items-stretch justify-between gap-4 px-4 py-3.5 rounded-[300px] border-[0.5px] border-solid border-white border-opacity-50 max-md:pr-5">
+          <img
+            loading="lazy"
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/f5c79fb03e13b147597049f039dd09f6c2d72734a25e794f5e95c38517e27b2c?"
+            className="aspect-square object-contain object-center w-[21px] fill-white overflow-hidden shrink-0 max-w-full"
+            alt="Logo"
+          />
+          <Link
+            href="/Search"
+            className="text-white text-sm tracking-wide self-center grow whitespace-nowrap my-auto"
+          >
+            Search
+          </Link>
+        </div>
+        <Link
+          href="/Home"
+          className="text-green-800 text-base font-semibold self-center my-auto"
+        >
+          Home
+        </Link>
+        <br />
+        <Link
+          href="/Brand"
+          className="text-green-800 text-base font-semibold self-center my-auto"
+        >
+          Brand
+        </Link>
+        <br />
+        <Link
+          href="/Personal Collection"
+          className="text-green-800 text-base font-semibold self-center my-auto"
+        >
+          Personal Collection
+        </Link>
+        <Link
+          href="/AllProduct"
+          className="text-green-800 text-base font-semibold self-center my-auto"
+        >
+          AllProduct
+        </Link>
+
+        <Link
+          href="/More"
+          className="text-green-800 text-base font-semibold self-center my-auto"
+        >
+          {" "}
+          More
+        </Link>
+      </div>
+      <br />
+      <div className="flex items-start gap-2.5 px-5 self-start">
+        <img
+          loading="lazy"
+          src="https://cdn.builder.io/api/v1/image/assets/TEMP/9f82c10f13384df40dd432f70ca57f1214f1fdc4941d8d52ea5a944683cac4b0?"
+          className="aspect-[2.71] object-contain object-center w-[57px] overflow-hidden self-center shrink-0 max-w-full my-auto"
+          alt="Wallet Icon"
+        />
+        <Link
+          href="/Wallet"
+          className="text-white text-base font-semibold tracking-wide whitespace-nowrap justify-center items-stretch self-center grow my-auto px-8 py-2.5 rounded-md border-[0.5px] border-solid border-white max-md:px-5"
+        >
+          Wallet
+        </Link>
+
+        <img
+          loading="lazy"
+          src="https://cdn.icon-icons.com/icons2/1736/PNG/512/4043260-avatar-male-man-portrait_113269.png"
+          className="aspect-square object-contain object-center w-11 overflow-hidden self-stretch shrink-0 max-w-full rounded-[50%]"
+          alt="Some Image"
+        />
+      </div>
+    </div>
+  );
+}
+
+export default MyComponent;
+
+
+
+
 // import Link from "next/link";
 
 // export default function Navbar() {
@@ -120,7 +214,7 @@
 //   );
 // };
 
-    // <div>
-    //   <Link href="/AllProduct">AllProduct</Link>;
-    // </div>
+//     // <div>
+//     //   <Link href="/AllProduct">AllProduct</Link>;
+//     // </div>
 
