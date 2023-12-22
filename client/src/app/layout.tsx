@@ -16,10 +16,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className + " flex flex-row"}>
-        <NextAuthProvider>
-          {children}
-        </NextAuthProvider>
+      <body className={inter.className }>
+        <NextAuthProvider>{children}</NextAuthProvider>
       </body>
     </html>
   );
