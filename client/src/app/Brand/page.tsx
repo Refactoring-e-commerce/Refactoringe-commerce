@@ -3,41 +3,46 @@
 import { FaPen } from 'react-icons/fa'
 import { FaCamera } from 'react-icons/fa'
 import { IoIosAddCircleOutline } from 'react-icons/io'
+import CollectionComp from './Components/collectioncomp'
 
-import { getoneBrandProfile } from "../utils/useApi";
+import { getoneBrandProfile, getallCollectionbyBrand } from "../utils/useApi";
 
 // import { Error } from "./error";
 // import { Loading } from "./loading";
 
 
 
-const BrandProfile=()=> {
-  const { data, isLoading, isError } = getoneBrandProfile ();
-  if (isLoading) return <h1>Loading</h1>;
-  if (isError) return <h1>error</h1>;;
+const BrandProfile = () => {
+    const { data: profileData, isLoading: profileLoading, isError: profileError } = getoneBrandProfile();
+    const { data: collectionData, isLoading: collectionLoading, isError: collectionError } = getallCollectionbyBrand();
+  
+    console.log(collectionData);
+  
+    if (profileLoading || collectionLoading) return <h1>Loading</h1>;
+    if (profileError || collectionError) return <h1>Error</h1>;
+
   
   
-  console.log( );
     return (
         <>
             <div className="h-fit min-h-full w-full px-12 py-7">
      
                 <div className=" relative flex w-full flex-col items-center justify-center p-10">
                     <div className="relative">
-                        <img src={data.cover} className="bg-container  md: md: h-[355px] w-[1040px] rounded-[5px] bg-Liver bg-opacity-10 brightness-50" />
+                        <img src={profileData.cover } className="bg-container  md: md: h-[355px] w-[1040px] rounded-[5px] bg-Liver bg-opacity-10 brightness-50" />
                         <div  className=" absolute bottom-2  right-[10px] flex h-10  w-10 cursor-pointer items-center  justify-center rounded-[150px] bg-Liver" >
                             <FaPen className="text-md  bg-[#733709bc}-500  absolute text-BabyPowder " />
                         </div>
                     </div>
 
                     <div className="relative top-[-70px] flex flex-col items-center justify-center">
-                        <img src={data.image} className="  bottom-[-40px] h-[120px] w-[120px] rounded-full border-2 border-white"
+                        <img src={profileData.image} className="  bottom-[-40px] h-[120px] w-[120px] rounded-full border-2 border-white"
                          />
                         <div  className=" absolute bottom-0 right-0 flex h-10  w-10 cursor-pointer items-center  justify-center rounded-[150px] bg-Liver">
                             <FaCamera className="text-md bg-Liver text-black " />
                         </div>
                     </div>
-                    <p className=" font-['SF Pro Display'] bottom-[50px] w-fit text-center text-[28px] font-semibold text-VanDyke md:absolute md:bottom-[67px]">{data.fullName}</p>
+                    <p className=" font-['SF Pro Display'] bottom-[50px] w-fit text-center text-[28px] font-semibold text-VanDyke md:absolute md:bottom-[67px]">{profileData.fullName}</p>
 
                     <div  className=" md:absolute    flex h-[45px] w-[164px] items-center justify-center gap-2.5 rounded-[150px] bg-VanDyke p-2.5 md:bottom-[90px] md:right-[00px]">
                         <span className="font-['SF Pro Display'] absolute cursor-pointer text-base font-semibold text-black">
@@ -45,7 +50,7 @@ const BrandProfile=()=> {
                         </span>
                     </div>
                     <span className="font-['SF Pro Display']  w-fit text-center text-base font-normal leading-[25px] text-VanDyke text-opacity-80 md:absolute md:bottom-[-4px] md:w-[896px]">
-                    {data.bio}
+                    {profileData.bio}
                     </span>
                 </div>
                 <div></div>
@@ -57,7 +62,7 @@ const BrandProfile=()=> {
                        
                     </div>
                     <div>
-                       
+                       <CollectionComp />
                     </div>
                 </div>
 

@@ -5,7 +5,7 @@ export const getoneBrandProfile = () => {
     const query = useQuery<Brand[]>({
       queryKey: ["Brand"],
       queryFn: async () => {
-        const result = await fetch("http://localhost:8080/brand/getone/2");
+        const result = await fetch("http://localhost:8080/brand/getone/1");
         const data = await result.json();
         return data.data;
       },
@@ -13,3 +13,20 @@ export const getoneBrandProfile = () => {
     });
     return query;
   };
+
+
+  export const getallCollectionbyBrand =()=>{
+    const query = useQuery<Collection[]>({
+      queryKey: ["collection"],
+      queryFn: async () => {
+        const result = await fetch("http://localhost:8080/collection/by-brand/1");
+        const data = await result.json();
+        // console.log(data)
+        return data.data;
+      },
+      select: (data) => data,
+    });
+    return query;
+  };
+
+  

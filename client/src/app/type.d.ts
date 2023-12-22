@@ -9,3 +9,7 @@ interface Brand {
 }
 
 
+interface Collection {
+  id: String ;   
+  name: String ;   
+}
