@@ -16,7 +16,7 @@ model User {
   fullName   String
   email      String           @unique
   password   String
-  bitrthDate String      
+  bitrthDate String         
   image      String?          @default("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.vecteezy.com%2Fpng%2F11675382-man-avatar-image-for-profile&psig=AOvVaw13jl7u6f6SEI9kx-79C7j7&ust=1703065759489000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCPCi3sWcm4MDFQAAAAAdAAAAABAD")
   type       String
   followers  Follow[]
