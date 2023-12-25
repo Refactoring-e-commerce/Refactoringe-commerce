@@ -5,14 +5,15 @@ import { IoClose } from "react-icons/io5";
 export const YourEmail = ({ setEmailV, setCodeV, setEmail, role }) => {
   const emailRef = useRef<HTMLInputElement>(null);
 
-  const [errorMessage, setErrorMessage] = useState<Boolean>(false);
-  let ErrMessage = "";
+  const [errorMessagePop, setErrorMessagePop] = useState<Boolean>(false);
+  const [ErrMessage, setErrMessage] = useState<string>("");
+
   const { mutateAsync, isPending } = useMutation({
     mutationFn: forgetPassword,
     onSuccess: async (response) => {
       if (response?.status == 400) {
-        ErrMessage = "This Email Doesn't Exist";
-        setErrorMessage(true);
+        setErrMessage("This Email Doesn't Exist");
+        setErrorMessagePop(true);
       } else {
         setEmailV(false);
         setCodeV(true);
@@ -28,8 +29,8 @@ export const YourEmail = ({ setEmailV, setCodeV, setEmail, role }) => {
         setEmail(userEmail);
         await mutateAsync({ email: userEmail, role });
       } else {
-        setErrorMessage(true);
-        ErrMessage = "Please Add Your Email";
+        setErrorMessagePop(true);
+        setErrMessage("Please Add Your Email");
       }
     } catch (err) {
       console.log(err);
@@ -50,7 +51,7 @@ export const YourEmail = ({ setEmailV, setCodeV, setEmail, role }) => {
           ref={emailRef}
           className="h-8  text-xl  p-4 w-[500px] py-5 bg-white bg-opacity-0  border-b-2 outline-none"
         />
-        {errorMessage && (
+        {errorMessagePop && (
           <p className="text-[red] pt-3  font-semibold flex justify-center items-center">
             {ErrMessage} <IoClose className="ml-1 text-2xl" />
           </p>

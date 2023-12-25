@@ -104,7 +104,6 @@ export const signInGoogle = passport.authenticate("google", {
 
 export const SignUp = async (req: Request, res: Response) => {
   const { role, email, password, fullName } = req.body;
-  console.log(req.body);
 
   const validation = SchemaValidation.validate({
     fullName,
@@ -203,7 +202,6 @@ export const verifyingCode = async (req: Request, res: Response) => {
 export const updatePassword = async (req: Request, res: Response) => {
   try {
     const { email, password, role } = req.body;
-    console.log(req.body);
 
     await updateByRole(role, email, password);
 
