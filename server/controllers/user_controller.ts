@@ -48,7 +48,7 @@ const CreateByRole = async (
         data: userData,
       });
     case "brand":
-      const brandData: Signup = {
+      const brandData: any = {
         email,
         fullName,
         password: await bcrypt.hash(password, 10),
@@ -57,7 +57,7 @@ const CreateByRole = async (
         data: brandData,
       });
     case "creator":
-      const creatorData: Signup = {
+      const creatorData: any = {
         email,
         fullName,
         password: await bcrypt.hash(password, 10),

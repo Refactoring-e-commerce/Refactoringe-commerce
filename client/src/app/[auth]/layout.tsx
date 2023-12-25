@@ -7,7 +7,7 @@ export const metadata = {
 export default async function SignInPage() {
   const cookieStore = cookies();
   const token = cookieStore.get("access_token");
-  console.log(token?.value);
+  // console.log(token?.value);
 
   // if (token) redirect("/");
 

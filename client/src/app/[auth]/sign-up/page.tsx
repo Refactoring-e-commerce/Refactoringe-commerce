@@ -24,13 +24,13 @@ const Signup = ({ selected }: { selected: string }) => {
     birthDate: string | undefined;
   }
 
-  const route = useRouter();
+  // const route = useRouter();
   const { mutate, isPending, isSuccess } = useMutation({
     mutationFn: signup,
     onSuccess(response) {
-      if (response.status == 201) {
-        redirect("/auth/sign-in");
-      }
+      // if (response.status == 201) {
+      //   redirect("/auth/sign-in");
+      // }
     },
   });
 

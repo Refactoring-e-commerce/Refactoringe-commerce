@@ -5,11 +5,10 @@ import { getFav, deleteFavoriteProduct } from "../utils/useApi";
 import { GoHeartFill } from "react-icons/go";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { log } from "console";
 const favoriteList = () => {
   const [heart, setheart] = useState("red");
   const { data } = getFav();
-  console.log(data);
+ console.log(data);
 
   const { mutate } = deleteFavoriteProduct();
 
@@ -29,17 +28,14 @@ const favoriteList = () => {
       </div>
 
       <div className="  justify-center flex flex-wrap gap-10 m-10 ">
-        {data?.map((Product: any) => {
-          console.log(Product, "gg");
+        {data?.map((Product: any)  => {
+          console.log(Product,'gg');
 
           return (
             <div className="flex flex-col-2 justify-center  " key={Product.id}>
               <div className="w-[384.12px] h-[534.58px] flex flex-col-4 justify-center bg-black  bg-opacity-10 rounded-lg shadow ">
                 <div className="rounded-lg m-5 relative top-4 transform h-64  w-60 transition duration-500 hover:scale-125">
-                  <img
-                    className="w-[240px] h-[282px]"
-                    src={Product.Product.image}
-                  />
+                  <img className="w-[240px] h-[282px]" src={Product.Product.image} />
                   <div className=" relative ">
                     <div className="flex flex-col-2 gap-24">
                       <h1 className="text-white text-xl text-opacity-50 font-medium font-['Poppins'] ">
@@ -72,7 +68,8 @@ const favoriteList = () => {
           );
         })}
       </div>
-    </div>
+      </div>
+  
   );
 };
 

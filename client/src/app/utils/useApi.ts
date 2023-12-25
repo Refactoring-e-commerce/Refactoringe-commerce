@@ -1,22 +1,18 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 export const signup = async (user: any) => {
-  const response = await fetch("http://localhost:8080/users/signup", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(user),
-  });
-
-  return response
-};
-
-export const UserData = () => {
-  return useMutation({
-    mutationKey: ["signup"],
-    mutationFn: signup,
-  });
+  try {
+    const response = await fetch("http://localhost:8080/users/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+    return response;
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export const signin = async (login: any) => {
@@ -84,13 +80,28 @@ export const updatePassword = async (data: any) => {
 
 export const getAllproduct = () => {
   const query = useQuery<Product[]>({
-    queryKey: ["product"],
+    queryKey: ["Product"],
     queryFn: async () => {
-      const result = await fetch("http://localhost:8080/Product/product");
+      const result = await fetch("http://localhost:8080/Creator/creator/1");
       const data = await result.json();
+      console.log(data);
       return data;
     },
-    select: (data) => data,
+  });
+  return query;
+};
+
+export const filterbyPrice = () => {
+  const query = useQuery<Product[]>({
+    queryKey: ["Product"],
+    queryFn: async () => {
+      const result = await fetch(
+        "http://localhost:8080/Product/product/:minprice/:maxprice"
+      );
+      const data = await result.json();
+      console.log(data);
+      return data;
+    },
   });
   return query;
 };
@@ -110,7 +121,7 @@ export const getallCollectionbyBrand = () => {
   const query = useQuery<Collection[]>({
     queryKey: ["collection"],
     queryFn: async () => {
-      const result = await fetch("http://localhost:8080/brand/by-brand/1");
+      const result = await fetch("http://localhost:8080/collection/by-brand/1");
       const data = await result.json();
       return data.data;
     },
@@ -118,6 +129,7 @@ export const getallCollectionbyBrand = () => {
   });
   return query;
 };
+
 export const getwalletByid = () => {
   const query = useQuery<Wallet[]>({
     queryKey: ["Wallet"],
