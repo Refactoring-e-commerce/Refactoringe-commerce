@@ -1,4 +1,7 @@
+
+
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { log } from "console";
 
 export const getAllproduct = () => {
   const query = useQuery<Product[]>({
@@ -49,13 +52,53 @@ export const LoginData = () => {
   });
 };
 
+export const getCreator = () => {
+  const query = useQuery<Creator[]>({
+    queryKey: ["Creator"],
+    queryFn: async () => {
+      const result = await fetch("http://localhost:8080/Creator/creator/1");
+      const data = await result.json();
+   console.log(data)
+      return data;
+    },
+   
+  });
+  return query;
+};
 
+
+
+export const filterbyPrice = () => {
+  const query = useQuery<Product[]>({
+    queryKey: ["Product"],
+    queryFn: async () => {
+      const result = await fetch("http://localhost:8080/Product/product/:minprice/:maxprice");
+      const data = await result.json();
+   console.log(data)
+      return data;
+    },
+   
+  });
+  return query;
+};
 
 export const getoneBrandProfile = () => {
   const query = useQuery<Brand[]>({
     queryKey: ["Brand"],
     queryFn: async () => {
-      const result = await fetch("http://localhost:8080/brand/getone/2");
+      const result = await fetch("http://localhost:8080/brand/getone/1");
+      const data = await result.json();
+      return data;
+    },
+   
+  });
+  return query;
+};
+export const getallCollectionbyBrand  = () => {
+  const query = useQuery<Collection[]>({
+    queryKey: ["collection"],
+    queryFn: async () => {
+      const result = await fetch("http://localhost:8080/collection/by-brand/1");
       const data = await result.json();
       return data.data;
     },
@@ -63,6 +106,9 @@ export const getoneBrandProfile = () => {
   });
   return query;
 };
+
+
+
 
 export const getwalletByid = () => {
   const query = useQuery<Wallet[]>({
@@ -87,11 +133,15 @@ export const getFav = () => {
     queryKey: ["Favorite"],
     queryFn: async () => {
       const result = await fetch("http://localhost:8080/favorite/1");
-      return result.json();
+      const data = await result.json();
+      console.log(data)
+      return data;
     },
+    
   });
   return query;
 };
+
 
 const Delete = async (productId: string) => {
   const result = await fetch(

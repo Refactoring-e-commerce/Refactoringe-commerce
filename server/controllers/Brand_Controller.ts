@@ -45,17 +45,13 @@ export async function getOneBrand(req: Request, res: Response): Promise<void> {
       },
     })   
      if (!brand) {
-      res.status(404).json({
-        success: false,
-        message: 'brand not found',
-      });
+      res.status(230).json([]);
       return;
     }
-    res.status(200).json({
-      success: true,
-      message: 'brand retrieved successfully',
-      data: brand,
-    });
+    res.status(200).json(
+     
+      brand
+    );
   } catch (error: any) {
     console.error('Error retrieving collection:', error);
     res.status(500).json({
