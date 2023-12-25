@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE "User" ALTER COLUMN "bitrthDate" SET DATA TYPE TEXT;

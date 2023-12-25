@@ -33,7 +33,7 @@ const CreateByRole = async (
 ) => {
   switch (role) {
     case "user":
-      const userData: SignUpuser = {
+      const userData: any = {
         email,
         fullName,
         birthDate,
@@ -43,7 +43,7 @@ const CreateByRole = async (
         data: userData,
       });
     case "brand":
-      const brandData: Signup = {
+      const brandData: any = {
         email,
         fullName,
         password: await bcrypt.hash(password, 10),
@@ -53,7 +53,7 @@ const CreateByRole = async (
       });
 
     case "creator":
-      const creatorData: Signup = {
+      const creatorData: any = {
         email,
         fullName,
         password: await bcrypt.hash(password, 10),
@@ -120,58 +120,6 @@ export const SignUp = async (req: Request, res: Response) => {
   }
 };
 
-// export const SignUpCreator = async (req: Request, res: Response) => {
-//   const { email, fullName, password } = req.body;
-//   try {
-//     const existingCreator = await findUserByRole("creator", email);
-//     if (existingCreator) {
-//       res.status(230).send({ error: "Creator already exists" });
-//     } else {
-//       const newCreator = await prisma.creator.create({
-//         data: {
-//           email,
-//           fullName,
-//           password: await bcrypt.hash(password, 10),
-//         },
-//       });
-
-//       if (!newCreator) {
-//         res.status(400).send({ error: "Failed to create creator" });
-//       } else {
-//         res.status(201).send("newCreator");
-//       }
-//     }
-//   } catch (err: any) {
-//     res.status(400).send({ error: err.message });
-//   }
-// };
-
-// export const SignUpBrand = async (req: Request, res: Response) => {
-//   const { email, fullName, password } = req.body;
-//   try {
-//     const existingBrand = await findUserByRole("brand", email);
-
-//     if (existingBrand) {
-//       res.status(230).send({ error: "Brand already exists" });
-//     } else {
-//       const newBrand = await prisma.brand.create({
-//         data: {
-//           email,
-//           fullName,
-//           password: await bcrypt.hash(password, 10),
-//         },
-//       });
-
-//       if (!newBrand) {
-//         res.status(400).send({ error: "Failed to create brand" });
-//       } else {
-//         res.status(201).json("newBrand");
-//       }
-//     }
-//   } catch (err: any) {
-//     res.status(400).send({ error: err.message });
-//   }
-// };
 
 export const logout = async (req: Request, res: Response) => {
   res
