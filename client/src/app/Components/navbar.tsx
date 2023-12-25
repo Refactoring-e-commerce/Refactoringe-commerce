@@ -1,12 +1,14 @@
 
-
 import Link from "next/link";
+
 
 interface MyComponentProps {
   // Define the props here if there are any
 }
 
 function MyComponent(props: MyComponentProps) {
+  
+  
   return (
     <div className="flex items-stretch justify-between gap-11 max-md:flex-wrap mt-5">
       <div className="flex items-start center justify-between gap-10 px-5 max-md:max-w-full max-md:flex-wrap">
@@ -42,7 +44,8 @@ function MyComponent(props: MyComponentProps) {
         </Link>
         <br />
         <Link
-          href="/Personal Collection"
+          href="/FavoriteList"
+
           className="text-green-800 text-base font-semibold self-center my-auto"
         >
           Personal Collection

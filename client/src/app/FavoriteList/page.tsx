@@ -5,14 +5,16 @@ import { getFav, deleteFavoriteProduct } from "../utils/useApi";
 import { GoHeartFill } from "react-icons/go";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { log } from "console";
 const favoriteList = () => {
   const [heart, setheart] = useState("red");
-  const { data, isLoading, isError } = getFav();
+  const { data } = getFav();
+  console.log(data);
 
   const { mutate } = deleteFavoriteProduct();
 
-  if (isError) return <h1>error</h1>;
-  if (isLoading) return <h1>Loading</h1>;
+  // if (isError) return <h1>error</h1>;
+  // if (isLoading) return <h1>Loading</h1>;
 
   const dislike = (productId: string) => {
     mutate(productId);
@@ -27,14 +29,17 @@ const favoriteList = () => {
       </div>
 
       <div className="  justify-center flex flex-wrap gap-10 m-10 ">
-        {data?.favorite.map(({ Product }: any, i: number) => {
-          console.log(Product,'gg');
+        {data?.map((Product: any) => {
+          console.log(Product, "gg");
 
           return (
-            <div className="flex flex-col-2 justify-center  " key={i}>
+            <div className="flex flex-col-2 justify-center  " key={Product.id}>
               <div className="w-[384.12px] h-[534.58px] flex flex-col-4 justify-center bg-black  bg-opacity-10 rounded-lg shadow ">
                 <div className="rounded-lg m-5 relative top-4 transform h-64  w-60 transition duration-500 hover:scale-125">
-                  <img className="w-[240px] h-[282px]" src={Product.image} />
+                  <img
+                    className="w-[240px] h-[282px]"
+                    src={Product.Product.image}
+                  />
                   <div className=" relative ">
                     <div className="flex flex-col-2 gap-24">
                       <h1 className="text-white text-xl text-opacity-50 font-medium font-['Poppins'] ">
@@ -54,9 +59,10 @@ const favoriteList = () => {
                 </div>
 
                 <GoHeartFill
-                    onClick={()=>{dislike(Product.id)   
-                     setheart('white')
-                     }}
+                  onClick={() => {
+                    dislike(Product.id);
+                    setheart("white");
+                  }}
                   size={40}
                   color={heart}
                   className="text-red-700 text- float-right relative top-[400px] "

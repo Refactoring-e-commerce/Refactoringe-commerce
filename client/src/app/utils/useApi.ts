@@ -1,8 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-
-
-const signup = async (user: any) => {
+export const signup = async (user: any) => {
   const response = await fetch("http://localhost:8080/users/signup", {
     method: "POST",
     headers: {
@@ -10,7 +8,8 @@ const signup = async (user: any) => {
     },
     body: JSON.stringify(user),
   });
-  console.log(response);
+
+  return response
 };
 
 export const UserData = () => {
@@ -20,24 +19,68 @@ export const UserData = () => {
   });
 };
 
-const signin = async (login: any) => {
-  const response = await fetch("http://localhost:8080/users", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(login),
-  });
-  console.log(response);
-};
-export const LoginData = () => {
-  return useMutation({
-    mutationKey: ["signin"],
-    mutationFn: signin,
-  });
+export const signin = async (login: any) => {
+  try {
+    const response = await fetch("http://localhost:8080/users/signin", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(login),
+    });
+    return response;
+  } catch (err) {
+    console.log("Unexpected Error:", err);
+  }
 };
 
+export const forgetPassword = async (data: any) => {
+  try {
+    const response = await fetch("http://localhost:8080/users/forgetPassword", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    return response;
+  } catch (err) {
+    console.log("Unexpected Error:", err);
+  }
+};
 
+export const verifyCode = async (data: any) => {
+  try {
+    const response = await fetch("http://localhost:8080/users/verifyCode", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    return response;
+  } catch (err) {
+    console.log("Unexpected Error:", err);
+  }
+};
+
+export const updatePassword = async (data: any) => {
+  try {
+    const response = await fetch("http://localhost:8080/users/updatePassword", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    return response;
+  } catch (err) {
+    console.log("Unexpected Error:", err);
+  }
+};
+
+// ===========================================================================
 
 export const getAllproduct = () => {
   const query = useQuery<Product[]>({
@@ -56,7 +99,18 @@ export const getoneBrandProfile = () => {
   const query = useQuery<Brand[]>({
     queryKey: ["Brand"],
     queryFn: async () => {
-      const result = await fetch("http://localhost:8080/brand/getone/2");
+      const result = await fetch("http://localhost:8080/brand/getone/1");
+      const data = await result.json();
+      return data;
+    },
+  });
+  return query;
+};
+export const getallCollectionbyBrand = () => {
+  const query = useQuery<Collection[]>({
+    queryKey: ["collection"],
+    queryFn: async () => {
+      const result = await fetch("http://localhost:8080/brand/by-brand/1");
       const data = await result.json();
       return data.data;
     },
@@ -64,7 +118,6 @@ export const getoneBrandProfile = () => {
   });
   return query;
 };
-
 export const getwalletByid = () => {
   const query = useQuery<Wallet[]>({
     queryKey: ["Wallet"],
@@ -88,7 +141,9 @@ export const getFav = () => {
     queryKey: ["Favorite"],
     queryFn: async () => {
       const result = await fetch("http://localhost:8080/favorite/1");
-      return result.json();
+      const data = await result.json();
+      console.log(data);
+      return data;
     },
   });
   return query;
@@ -112,5 +167,4 @@ export const deleteFavoriteProduct = () => {
     mutationKey: ["Delete"],
     mutationFn: Delete,
   });
-}; 
-
+};
