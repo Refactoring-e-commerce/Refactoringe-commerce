@@ -121,7 +121,6 @@ export const SignUp = async (req: Request, res: Response) => {
 };
 
 
-
 export const logout = async (req: Request, res: Response) => {
   res
     .clearCookie("access_token", {

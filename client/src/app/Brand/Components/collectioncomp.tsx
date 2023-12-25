@@ -18,22 +18,42 @@ const CollectionComp = () => {
   if (collectionError) return <h1>Error</h1>;
 
   return (
-    <div className="py-10">
+    <div className="py-20  w-[840px] ">
       {data?.map((coll: any) => (
-        <Carousel>
-          <div>
-            <img src="assets/1.jpeg" />
-            <p className="legend">Legend 1</p>
+        <div>
+          <div className=" relative top-[-10px] flex items-center">
+            <img
+              src={coll.Creator.image}
+              className="  h-[70px] w-[70px] rounded-full border-2 border-white"
+            />
+            <p className="font-['SF Pro Display'] ml-2 text-[15px] font-semibold text-VanDyke">
+              {coll.Creator.fullName}
+            </p>
           </div>
-          <div>
-            <img src="assets/2.jpeg" />
-            <p className="legend">Legend 2</p>
-          </div>
-          <div>
-            <img src="assets/3.jpeg" />
-            <p className="legend">Legend 3</p>
-          </div>
-        </Carousel>
+          <Carousel>
+            <div>
+              <img
+                className=" "
+                src={coll.product[0].image[0]}
+              />
+              <p className="legend">{coll.product[0].description}</p>
+            </div>
+            <div>
+              <img
+                className=""
+                src={coll.product[1].image[0]}
+              />
+              <p className="legend">{coll.product[1].description}</p>
+            </div>
+            <div>
+              <img
+                className=" "
+                src={coll.product[1].image[0]}
+              />
+              <p className="legend">{coll.product[1].description}</p>
+            </div>
+          </Carousel>
+        </div>
       ))}
     </div>
   );
