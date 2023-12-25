@@ -75,7 +75,8 @@ export const createProduct = async (req: Request<{}, {}, CreateProductRequest>, 
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
-};
+}
+
 
 export const updateProduct = async (req: Request, res: Response) => {
   try {
@@ -117,4 +118,25 @@ export const deleteProduct = async (req: Request, res: Response) => {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
-};
+}
+
+export const filterbyPrice = async (req: Request, res: Response) => {
+  const minPrice = parseFloat(req.params.minprice);
+  const maxPrice = parseFloat(req.params.maxprice);
+
+  try {
+    const products = await prisma.product.findMany({
+      where: {
+        price: {
+          gte: minPrice,
+          lte: maxPrice,
+        },
+      },
+    });
+
+    res.status(200).json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}

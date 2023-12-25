@@ -1,4 +1,7 @@
+
+
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { log } from "console";
 
 export const getAllproduct = () => {
   const query = useQuery<Product[]>({
@@ -49,7 +52,35 @@ export const LoginData = () => {
   });
 };
 
+export const getCreator = () => {
+  const query = useQuery<Creator[]>({
+    queryKey: ["Creator"],
+    queryFn: async () => {
+      const result = await fetch("http://localhost:8080/Creator/creator/1");
+      const data = await result.json();
+   console.log(data)
+      return data;
+    },
+   
+  });
+  return query;
+};
 
+
+
+export const filterbyPrice = () => {
+  const query = useQuery<Product[]>({
+    queryKey: ["Product"],
+    queryFn: async () => {
+      const result = await fetch("http://localhost:8080/Product/product/:minprice/:maxprice");
+      const data = await result.json();
+   console.log(data)
+      return data;
+    },
+   
+  });
+  return query;
+};
 
 export const getoneBrandProfile = () => {
   const query = useQuery<Brand[]>({
@@ -59,12 +90,10 @@ export const getoneBrandProfile = () => {
       const data = await result.json();
       return data;
     },
-
+   
   });
   return query;
 };
-
-
 export const getallCollectionbyBrand  = () => {
   const query = useQuery<Collection[]>({
     queryKey: ["collection"],
@@ -77,6 +106,8 @@ export const getallCollectionbyBrand  = () => {
   });
   return query;
 };
+
+
 
 
 export const getwalletByid = () => {
@@ -106,9 +137,11 @@ export const getFav = () => {
       console.log(data)
       return data;
     },
+    
   });
   return query;
 };
+
 
 const Delete = async (productId: string) => {
   const result = await fetch(
