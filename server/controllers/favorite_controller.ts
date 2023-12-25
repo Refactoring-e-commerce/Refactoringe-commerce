@@ -19,11 +19,11 @@ export const getFavoritesById = async (req: Request, res: Response): Promise<voi
         });
 
         if (!user) {
-            res.status(404).json({ success: false, message: 'User not found' });
+            res.status(230).json([]);
             return;
         }
 
-        res.status(200).json({ success: true, favorite: user.favorite });
+        res.status(200).json(user.favorite);
     } catch (error) {
         console.error('Error retrieving favorites for user:', error);
         res.status(500).json({ success: false, message: 'Internal server error' });
@@ -39,7 +39,7 @@ export const addProductToFav = async (req: Request, res: Response): Promise<void
         });
 
         if (!user) {
-            res.status(404).json({ success: false, message: 'User not found' });
+            res.status(404).json([]);
             return;
         }
 
@@ -48,7 +48,7 @@ export const addProductToFav = async (req: Request, res: Response): Promise<void
         });
 
         if (!product) {
-            res.status(404).json({ success: false, message: 'Product not found' });
+            res.status(404).json([]);
             return;
         }
 
@@ -59,7 +59,7 @@ export const addProductToFav = async (req: Request, res: Response): Promise<void
             },
         });
 
-        res.status(201).json({ success: true, message: 'Product added to favorites successfully', product });
+        res.status(201).json(product);
     } catch (error) {
         console.error('Error adding product to favorites:', error);
         res.status(500).json({ success: false, message: 'Internal server error' });

@@ -33,7 +33,7 @@ const CreateByRole = async (
 ) => {
   switch (role) {
     case "user":
-      const userData: SignUpuser = {
+      const userData: any = {
         email,
         fullName,
         birthDate,
@@ -43,7 +43,7 @@ const CreateByRole = async (
         data: userData,
       });
     case "brand":
-      const brandData: Signup = {
+      const brandData: any = {
         email,
         fullName,
         password: await bcrypt.hash(password, 10),
@@ -53,13 +53,13 @@ const CreateByRole = async (
       });
 
     case "creator":
-      const creatorData: Signup = {
+      const creatorData: any = {
         email,
         fullName,
         password: await bcrypt.hash(password, 10),
       };
       return await prisma.creator.create({
-        data: creatorData,
+        data: creatorData ,
       });
   }
 };
