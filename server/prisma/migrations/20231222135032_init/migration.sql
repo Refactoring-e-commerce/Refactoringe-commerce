@@ -4,8 +4,9 @@ CREATE TABLE "User" (
     "fullName" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "birthDate" DATE NOT NULL,
+    "bitrthDate" TEXT NOT NULL,
     "image" TEXT DEFAULT 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.vecteezy.com%2Fpng%2F11675382-man-avatar-image-for-profile&psig=AOvVaw13jl7u6f6SEI9kx-79C7j7&ust=1703065759489000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCPCi3sWcm4MDFQAAAAAdAAAAABAD',
+    "type" TEXT NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -78,7 +79,7 @@ CREATE TABLE "Creator" (
     "image" TEXT DEFAULT 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.vecteezy.com%2Fpng%2F11675382-man-avatar-image-for-profile&psig=AOvVaw13jl7u6f6SEI9kx-79C7j7&ust=1703065759489000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCPCi3sWcm4MDFQAAAAAdAAAAABAD',
     "cover" TEXT DEFAULT 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fimagekit.io%2Fblog%2Fhow-to-resize-image-in-html%2F&psig=AOvVaw0b5mwqSTBp6PX8wITT6hj0&ust=1703065630198000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCMiysYWcm4MDFQAAAAAdAAAAABAD',
     "bio" TEXT,
-    "brandId" TEXT NOT NULL,
+    "brandId" TEXT,
 
     CONSTRAINT "Creator_pkey" PRIMARY KEY ("id")
 );
@@ -161,7 +162,7 @@ ALTER TABLE "Collection" ADD CONSTRAINT "Collection_brandId_fkey" FOREIGN KEY ("
 ALTER TABLE "Collection" ADD CONSTRAINT "Collection_creatorId_fkey" FOREIGN KEY ("creatorId") REFERENCES "Creator"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Creator" ADD CONSTRAINT "Creator_brandId_fkey" FOREIGN KEY ("brandId") REFERENCES "Brand"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Creator" ADD CONSTRAINT "Creator_brandId_fkey" FOREIGN KEY ("brandId") REFERENCES "Brand"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Follow" ADD CONSTRAINT "Follow_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
