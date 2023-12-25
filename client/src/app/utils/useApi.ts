@@ -1,4 +1,7 @@
+
+
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { log } from "console";
 
 export const getAllproduct = () => {
   const query = useQuery<Product[]>({
@@ -47,27 +50,55 @@ export const LoginData = () => {
     mutationKey: ["signin"],
     mutationFn: signin,
   });
-}; 
-export const getallCollectionbyBrand  = () => {
-  const query = useQuery<Collection[]>({
-    queryKey: ["collection"],
+};
+
+export const getCreator = () => {
+  const query = useQuery<Creator[]>({
+    queryKey: ["Creator"],
     queryFn: async () => {
-      const result = await fetch("http://localhost:8080/collection/by-brand/1");
+      const result = await fetch("http://localhost:8080/Creator/creator/1");
       const data = await result.json();
-      return data.data;
+   console.log(data)
+      return data;
     },
-    select: (data) => data,
+   
   });
   return query;
 };
 
 
 
+export const filterbyPrice = () => {
+  const query = useQuery<Product[]>({
+    queryKey: ["Product"],
+    queryFn: async () => {
+      const result = await fetch("http://localhost:8080/Product/product/:minprice/:maxprice");
+      const data = await result.json();
+   console.log(data)
+      return data;
+    },
+   
+  });
+  return query;
+};
+
 export const getoneBrandProfile = () => {
   const query = useQuery<Brand[]>({
     queryKey: ["Brand"],
     queryFn: async () => {
       const result = await fetch("http://localhost:8080/brand/getone/1");
+      const data = await result.json();
+      return data;
+    },
+   
+  });
+  return query;
+};
+export const getallCollectionbyBrand  = () => {
+  const query = useQuery<Collection[]>({
+    queryKey: ["collection"],
+    queryFn: async () => {
+      const result = await fetch("http://localhost:8080/collection/by-brand/1");
       const data = await result.json();
       return data;
     },
@@ -143,11 +174,13 @@ export const getFav = () => {
       const data = await result.json();
       console.log(data)
       return data;
+      
     },
 
   });
   return query;
 };
+
 
 const Delete = async (productId: string) => {
   const result = await fetch(

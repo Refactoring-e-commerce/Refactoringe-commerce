@@ -28,7 +28,7 @@ export const getFavoritesById = async (req: Request, res: Response): Promise<voi
         console.error('Error retrieving favorites for user:', error);
         res.status(500).json({ success: false, message: 'Internal server error' });
     }
-};
+}
 
 export const addProductToFav = async (req: Request, res: Response): Promise<void> => {
     const { userId, prodId } = req.params;

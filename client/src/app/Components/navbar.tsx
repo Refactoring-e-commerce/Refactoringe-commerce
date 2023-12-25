@@ -44,8 +44,7 @@ function MyComponent(props: MyComponentProps) {
         <Link
           href="/FavoriteList"
           className="text-green-800 text-base font-semibold self-center my-auto"
-        >
-          Personal Collection
+        >PersonalCollection
         </Link>
         <Link
           href="/AllProduct"
