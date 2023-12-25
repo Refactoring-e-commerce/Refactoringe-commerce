@@ -14,4 +14,10 @@
     id: string,
     userId : string,
     productId : string
+} 
+interface Collection {
+  id:        String;
+  name:      String;
+  brandId:   String;
+  creatorId: String;
 }

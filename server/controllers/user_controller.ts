@@ -59,7 +59,7 @@ const CreateByRole = async (
         password: await bcrypt.hash(password, 10),
       };
       return await prisma.creator.create({
-        data: creatorData,
+        data: creatorData ,
       });
   }
 };
