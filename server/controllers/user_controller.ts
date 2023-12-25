@@ -187,7 +187,6 @@ export const verifyingCode = async (req: Request, res: Response) => {
   try {
     const { email, fullCode } = req.body;
 
-<<<<<<< HEAD
     const storedCode = verificationCodes[email];
 
     if (storedCode && parseInt(fullCode) === storedCode) {
@@ -252,14 +251,4 @@ const updateByRole = async (role: string, email: string, password: string) => {
     console.error("Error during user creation:", error);
     throw new Error("Failed to create user");
   }
-=======
-export const logout = async (req: Request, res: Response) => {
-  res
-    .clearCookie("access_token", {
-      sameSite: "none",
-      secure: true,
-    })
-    .status(200)
-    .send("user has been loged out");
->>>>>>> 3757fb1462996c995840855653502c925e4858bf
 };
