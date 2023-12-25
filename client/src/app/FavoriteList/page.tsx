@@ -1,19 +1,23 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { FcLikePlaceholder } from "react-icons/fc";
+import { FcLike } from "react-icons/fc";
 import { getFav, deleteFavoriteProduct } from "../utils/useApi";
 import { GoHeartFill } from "react-icons/go";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Link from "next/link";
+import { log } from "console";
 const favoriteList = () => {
   const [heart, setheart] = useState("red");
-  const { data } = getFav();
+  const { data,isError,isLoading } = getFav();
  console.log(data);
 
   const { mutate } = deleteFavoriteProduct();
 
-  // if (isError) return <h1>error</h1>;
-  // if (isLoading) return <h1>Loading</h1>;
+//   if (isError) return <h1>error</h1>;
+//   if (isLoading) return <h1>Loading</h1>;
 
   const dislike = (productId: string) => {
     mutate(productId);
@@ -24,53 +28,73 @@ const favoriteList = () => {
       <div className="flex flex-col bg-red justify-center items-center bg-opacity">
         <ToastContainer />
 
-        <h1 className="text-white text-[50px]">Liked Products</h1>
+        <h1 className="mb-4 text-3xl  text-center font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
+            Favorite
+          </span>{" "}
+          List
+        </h1>
       </div>
 
       <div className="  justify-center flex flex-wrap gap-10 m-10 ">
-        {data?.map((Product: any)  => {
-          console.log(Product,'gg');
-
-          return (
-            <div className="flex flex-col-2 justify-center  " key={Product.id}>
-              <div className="w-[384.12px] h-[534.58px] flex flex-col-4 justify-center bg-black  bg-opacity-10 rounded-lg shadow ">
-                <div className="rounded-lg m-5 relative top-4 transform h-64  w-60 transition duration-500 hover:scale-125">
-                  <img className="w-[240px] h-[282px]" src={Product.Product.image} />
-                  <div className=" relative ">
-                    <div className="flex flex-col-2 gap-24">
-                      <h1 className="text-white text-xl text-opacity-50 font-medium font-['Poppins'] ">
-                        {Product.name}
-                      </h1>
-                      <h2 className="text-white text-sm font-bold font-['Poppins'] ">
-                        {Product.price}.000$
-                      </h2>
-                    </div>
-                  </div>
-
-                  <button className=" relative top-10 cursor-pointer [border:none] py-[7.303840637207031px] px-[14.607681274414062px] bg-[transparent] flex-1 rounded-5xs-3 [background:linear-gradient(232.11deg,_#ff5b29,_rgba(255,_242,_245,_0.64)_13.54%,_rgba(255,_61,_0,_0.74)_41.15%,_rgba(144,_12,_63,_0.82)_74.48%,_#900c3f_98.96%)] h-[37px] flex flex-row items-center justify-center box-border hover:[filter:drop-shadow(0px_4px_4px_rgba(0,_0,_0,_0.25))] active:bg-orangered">
-                    <div className="relative text-mini-6 font-semibold font-poppins text-white text-left inline-block w-[84.3px] h-[21.9px] shrink-0">
-                      Buy Now
-                    </div>
-                  </button>
-                </div>
-
-                <GoHeartFill
-                  onClick={() => {
-                    dislike(Product.id);
-                    setheart("white");
-                  }}
-                  size={40}
-                  color={heart}
-                  className="text-red-700 text- float-right relative top-[400px] "
-                />
+      {data?.map((Product: any) => (
+            <div
+              key={Product.id}
+              className={`p-2 rounded-md shadow-md transition-transform transform bg-[#ffffff1a] hover:bg-transparent hover:scale-105 hover:opacity-80`}
+            >
+              <img
+                src={Product.Product.image}
+                alt={Product.Product.name}
+                className="w-full h-100 object-cover mb-2 rounded-md"
+              />
+              <div className="text-xs font-medium font-['Poppins'] text-gray-500 mb-1">
+                {Product.Product.category}
               </div>
-            </div>
-          );
-        })}
-      </div>
+              <div className="flex">
+                <div className="text-sm text-white font-extralight mb-1 mr-20">
+                  {Product.Product.name}
+                </div>
+                <div className="text-sm font-bold text-green-600">
+                  ${Product.Product.price}
+                </div>
+              </div>
+
+              <div className="flex items-center">
+              <Link 
+                href="/FavoriteList"
+                >
+              <div
+                  className="mr-4 "
+                  onClick={() => { 
+                     dislike(Product.Product.id)
+                     setheart('white')
+                  
+                  }} 
+                  color={heart}
+                >
+
+                  {heart? <FcLikePlaceholder /> : <FcLike />}
+                </div>
+                </Link>
+                  
+                
+                  
+                </div>
+                <button
+                  className="mt-2 ml-2 bg-green-500 hover:bg-green-600 text-white px-4 py-1 rounded-md self-center"
+                >
+                  Buy Now
+                </button>
+              </div>
+            
+          ))}
+      </div> 
+      { data && data.length <= 0 && 
+      <div className="flex justify-center m-9">
+      <h1 className="text-xl text-white  ">U Haven't Liked Any Products yet</h1>
+    </div> }
       </div>
   
   );
-};
-
-export default favoriteList;
+}; 
+export  default favoriteList

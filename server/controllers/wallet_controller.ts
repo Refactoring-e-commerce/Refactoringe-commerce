@@ -18,11 +18,11 @@ export const getWalletById = async (req: Request, res: Response): Promise<void> 
         });
 
         if (!user) {
-            res.status(404).send({ success: false, message: 'User not found' });
+            res.status(404).send([]);
             return;
         }
 
-        res.status(200).send({ success: true, wallets: user.wallets });
+        res.status(200).send( user.wallets);
     } catch (error) {
         console.error('Error retrieving wallets for user:', error);
         res.status(500).send(error);
@@ -36,8 +36,7 @@ export const getWalletById = async (req: Request, res: Response): Promise<void> 
 
 
 export const addProductForUser = async (req: Request, res: Response): Promise<void> => {
-    const userId = req.body.userId;
-    const productId = req.body.productId;
+    const {userId, productId} = req.params;
 
     try {
         const user = await prisma.user.findUnique({
@@ -49,9 +48,9 @@ export const addProductForUser = async (req: Request, res: Response): Promise<vo
         });
 
         if (!user) {
-            res.status(404).send({ success: false, message: 'User not found' });
+            res.status(404).send([]);
         } else if (!existingProduct) {
-            res.status(404).send({ success: false, message: 'Existing product not found' });
+            res.status(404).send([]);
         } else {
             await prisma.wallet.create({
                 data: {

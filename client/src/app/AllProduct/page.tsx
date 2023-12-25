@@ -3,6 +3,9 @@ import { getAllproduct } from "../utils/useApi";
 import { FcLikePlaceholder } from "react-icons/fc";
 import { FcLike } from "react-icons/fc";
 import { useState } from "react";
+import { Addfav } from "../utils/useApi";
+// import { useRouter } from "next/router";
+import Link from "next/link";
 import {SlideBar} from "./Components/SlideBar"
 
 
@@ -21,14 +24,23 @@ const AllProduct = () => {
     const [favorites, setFavorites] = useState([]);
  
   // const data: string[] = [];
-  console.log(data);
+  console.log(data); 
+
+  const {mutate}= Addfav()
+
   // if (isLoading) return <h1>loading</h1>;
   // if (isError) return <h1>error</h1>;
 
   //  const dislike = (id:any) => {
   //    setLike(!like);
        
-  //      }
+  //      } 
+     
+    const Like =(productId: string)=>{
+      mutate(productId) 
+     
+
+    }
        
   //    const showAllProducts = () => {
   //      setFilteredProducts([]);
@@ -113,12 +125,21 @@ const AllProduct = () => {
               </div>
 
               <div className="flex items-center">
+                <Link 
+                href="/FavoriteList"
+                >
                 <div
                   className="mr-4 "
+                  onClick={() => { 
+                     Like( product.id)
+                     setLike(true)  
+                  }}
                  
                 >
+
                   {like ? <FcLikePlaceholder /> : <FcLike />}
                 </div>
+                </Link>
                 <button
                   className="mt-2 ml-2 bg-green-500 hover:bg-green-600 text-white px-4 py-1 rounded-md self-center"
                   // onClick={() => addToFavorites(product)} // Also add the product to favorites on button click
