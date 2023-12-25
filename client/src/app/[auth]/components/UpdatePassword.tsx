@@ -3,20 +3,26 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { updatePassword } from "@/utils/useApi";
 import { IoClose } from "react-icons/io5";
 import { useMutation } from "@tanstack/react-query";
-const UpdateForgetPassword = ({ setUpdatePassV, email, setForgetPassForm,role }) => {
+const UpdateForgetPassword = ({
+  setUpdatePassV,
+  email,
+  setForgetPassForm,
+  role,
+}) => {
   const passRef = useRef<HTMLInputElement>(null);
   const ConPassRef = useRef<HTMLInputElement>(null);
   const [showPass, setShowPass] = useState<boolean>(false);
   const [showConPass, setShowConPass] = useState<boolean>(false);
-  const [error, setError] = useState<Boolean>(false);
-  let ErrMessage = "";
+
+  const [errorMessagePop, setErrorMessagePop] = useState<Boolean>(false);
+  const [ErrMessage, setErrMessage] = useState<string>("");
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: updatePassword,
     onSuccess: async (response) => {
       if (response?.status == 400) {
-        setError(true);
-        ErrMessage="verification failed check code"; 
+        setErrorMessagePop(true);
+        setErrMessage("verification failed check code");
       } else {
         setUpdatePassV(false);
         setForgetPassForm(false);
@@ -27,14 +33,19 @@ const UpdateForgetPassword = ({ setUpdatePassV, email, setForgetPassForm,role })
     e.preventDefault();
     const password = passRef.current?.value;
     const confirmPass = ConPassRef.current?.value;
-    if (password !== confirmPass || !confirmPass || !password || password.length < 8) {
-      setError(true);
-      ErrMessage = " Check Your Code";
+    if (
+      password !== confirmPass ||
+      !confirmPass ||
+      !password ||
+      password.length < 8
+    ) {
+      setErrorMessagePop(true);
+      setErrMessage(" Check Your Code");
     } else if (confirmPass.length < 8 || password.length < 8) {
-      setError(true);
-      ErrMessage = "should lenth of password more than 8";
+      setErrorMessagePop(true);
+      setErrMessage("should lenth of password more than 8");
     } else {
-      await mutateAsync({ email, password ,role});
+      await mutateAsync({ email, password, role });
     }
   };
   return (
@@ -80,7 +91,7 @@ const UpdateForgetPassword = ({ setUpdatePassV, email, setForgetPassForm,role })
             {showConPass ? <FaRegEyeSlash /> : <FaRegEye />}
           </span>
         </div>
-        {error && (
+        {errorMessagePop && (
           <p className="text-[red] pt-3  font-semibold flex justify-center items-center">
             {ErrMessage} <IoClose className="ml-1 text-2xl" />
           </p>
