@@ -1,8 +1,11 @@
-import React from 'react'
+import Cookies from "universal-cookie";
 
- const Home = () => {
-  return (
-    <div>Home</div>
-  )
-}
-export default Home
+const Home = () => {
+  const cookies = new Cookies();
+
+  const token = cookies.get("access_token");
+  // console.log(token.value);
+  return <div>Home</div>;
+};
+
+export default Home;
