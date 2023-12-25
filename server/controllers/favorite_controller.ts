@@ -39,7 +39,7 @@ export const addProductToFav = async (req: Request, res: Response): Promise<void
         });
 
         if (!user) {
-            res.status(404).json({ success: false, message: 'User not found' });
+            res.status(404).json([]);
             return;
         }
 
@@ -48,7 +48,7 @@ export const addProductToFav = async (req: Request, res: Response): Promise<void
         });
 
         if (!product) {
-            res.status(404).json({ success: false, message: 'Product not found' });
+            res.status(404).json([]);
             return;
         }
 
@@ -59,7 +59,7 @@ export const addProductToFav = async (req: Request, res: Response): Promise<void
             },
         });
 
-        res.status(201).json({ success: true, message: 'Product added to favorites successfully', product });
+        res.status(201).json(product);
     } catch (error) {
         console.error('Error adding product to favorites:', error);
         res.status(500).json({ success: false, message: 'Internal server error' });
