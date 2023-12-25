@@ -1,20 +1,40 @@
 "use client";
-
 import React, { useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
-import AuthButtons from "@/[auth]/components/authButtons";
-import { LoginData } from "../../utils/useApi";
+import AuthButtons from "@/[auth]/components/AuthButtons";
+import { signin } from "../../utils/useApi";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ForgetForm from "../components/ForgetForm";
+import { useMutation } from "@tanstack/react-query";
 const Signin = ({ selected }: { selected: string }) => {
-  const router = useRouter();
-
   const [isEmailFocused, setIsEmailFocused] = useState<boolean>(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState<boolean>(false);
+  const [forgetPassForm, setForgetPassForm] = useState<boolean>(false);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
-  const { mutate, isPending } = LoginData();
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: signin,
+    onSuccess: async (response) => {
+      const { token } = await response?.json();
+      const decodedString = decodeURIComponent(token);
+      console.log(decodedString);
+
+      if (response?.status == 401) {
+        toast.error(" Invalid Password", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      } else {
+      }
+    },
+  });
 
   const handleAnimation = (field: string) => {
     if (field === "email") {
@@ -55,23 +75,26 @@ const Signin = ({ selected }: { selected: string }) => {
         progress: undefined,
         theme: "colored",
       });
-      console.log("form submission");
+      console.log("form err");
     } else {
       const data = {
+        role: selected,
         email: emailRef.current?.value,
         password: passwordRef.current?.value,
       };
-      mutate(data);
+
+      await mutateAsync(data);
     }
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-[400px] bg-white bg-opacity-20 rounded-[10px] flex-col flex justify-center items-center p-8"
+      className="w-[400px] bg-[#6689a7cf]  rounded-[10px] flex-col flex justify-center items-center p-8"
     >
+      {forgetPassForm && <ForgetForm setForgetPassForm={setForgetPassForm} />}
       <div className="  flex flex-col w-full ">
-        <p className="text-start mb-2 w-fit   text-gray-400 text-3xl font-extrabold font-['SF Pro Display'] tracking-tight">
+        <p className="text-start mb-2 w-fit   text-white text-3xl font-extrabold font-['SF Pro Display'] tracking-tight">
           Sign In
         </p>
 
@@ -80,7 +103,7 @@ const Signin = ({ selected }: { selected: string }) => {
             New ?
           </span>{" "}
           <Link href="/auth/sign-up">
-            <span className="text-indigo-500 text-md font-medium font-['SF Pro Display'] tracking-tight">
+            <span className="text-white text-md font-medium font-['SF Pro Display'] tracking-tight">
               {"  "}
               Create an account
             </span>
@@ -110,12 +133,13 @@ const Signin = ({ selected }: { selected: string }) => {
               htmlFor="password"
               className={`${
                 isPasswordFocused ? "translate-y-[-20px]" : "translate-y-[0px]"
-              } text-white transition-all absolute text-lg font-normal font-['SF Pro Display'] tracking-tight`}
+              } text-white hover:text-white   transition-all absolute text-lg font-normal font-['SF Pro Display'] tracking-tight`}
             >
               Password
             </label>
             <input
               id="password"
+              type="password"
               onFocus={() => handleAnimation("password")}
               onBlur={() => handleBlur("password")}
               ref={passwordRef}
@@ -127,11 +151,13 @@ const Signin = ({ selected }: { selected: string }) => {
       <button
         type="submit"
         disabled={isPending}
-        className=" w-full  flex items-center font-semibold justify-center h-12 px-6 mt-4  outline-none   transition-colors duration-300 bg-white shadow text-black  focus:shadow-outline hover:bg-slate-200"
+        className=" w-full cursor-pointer  flex items-center font-semibold justify-center h-12 px-6 mt-4  outline-none   transition-colors duration-300 bg-white shadow text-black  focus:shadow-outline hover:bg-slate-200"
       >
         {isPending ? "Login..." : "Login"}
       </button>
-
+      <div className=" cursor-pointer hover:text-white   transition-all" onClick={() => setForgetPassForm(true)}>
+        Forget password ?
+      </div>
       <p className="my-2">OR ?</p>
       <AuthButtons />
       <ToastContainer />

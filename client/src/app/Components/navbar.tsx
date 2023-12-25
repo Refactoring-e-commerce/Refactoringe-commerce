@@ -216,4 +216,3 @@ export default MyComponent;
 //     // <div>
 //     //   <Link href="/AllProduct">AllProduct</Link>;
 //     // </div>
-

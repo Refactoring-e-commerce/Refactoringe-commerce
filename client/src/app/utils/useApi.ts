@@ -1,83 +1,107 @@
-
-
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { log } from "console";
+
+export const signup = async (user: any) => {
+  try {
+    const response = await fetch("http://localhost:8080/users/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+    return response;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const signin = async (login: any) => {
+  try {
+    const response = await fetch("http://localhost:8080/users/signin", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(login),
+    });
+    return response;
+  } catch (err) {
+    console.log("Unexpected Error:", err);
+  }
+};
+
+export const forgetPassword = async (data: any) => {
+  try {
+    const response = await fetch("http://localhost:8080/users/forgetPassword", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    return response;
+  } catch (err) {
+    console.log("Unexpected Error:", err);
+  }
+};
+
+export const verifyCode = async (data: any) => {
+  try {
+    const response = await fetch("http://localhost:8080/users/verifyCode", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    return response;
+  } catch (err) {
+    console.log("Unexpected Error:", err);
+  }
+};
+
+export const updatePassword = async (data: any) => {
+  try {
+    const response = await fetch("http://localhost:8080/users/updatePassword", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    return response;
+  } catch (err) {
+    console.log("Unexpected Error:", err);
+  }
+};
+
+// ===========================================================================
 
 export const getAllproduct = () => {
   const query = useQuery<Product[]>({
-    queryKey: ["product"],
-    queryFn: async () => {
-      const result = await fetch("http://localhost:8080/Product/product");
-      const data = await result.json();
-      return data;
-    },
-    select: (data) => data,
-  });
-  return query;
-};
-
-
-const signup = async (user: any) => {
-  const response = await fetch("http://localhost:8080/users/signup", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(user),
-  });
-  console.log(response);
-};
-
-export const UserData = () => {
-  return useMutation({
-    mutationKey: ["signup"],
-    mutationFn: signup,
-  });
-};
-
-const signin = async (login: any) => {
-  const response = await fetch("http://localhost:8080/users", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(login),
-  });
-  console.log(response);
-};
-export const LoginData = () => {
-  return useMutation({
-    mutationKey: ["signin"],
-    mutationFn: signin,
-  });
-};
-
-export const getCreator = () => {
-  const query = useQuery<Creator[]>({
-    queryKey: ["Creator"],
+    queryKey: ["Product"],
     queryFn: async () => {
       const result = await fetch("http://localhost:8080/Creator/creator/1");
       const data = await result.json();
-   console.log(data)
+      console.log(data);
       return data;
     },
-   
   });
   return query;
 };
-
-
 
 export const filterbyPrice = () => {
   const query = useQuery<Product[]>({
     queryKey: ["Product"],
     queryFn: async () => {
-      const result = await fetch("http://localhost:8080/Product/product/:minprice/:maxprice");
+      const result = await fetch(
+        "http://localhost:8080/Product/product/:minprice/:maxprice"
+      );
       const data = await result.json();
-   console.log(data)
+      console.log(data);
       return data;
     },
-   
   });
   return query;
 };
@@ -90,11 +114,10 @@ export const getoneBrandProfile = () => {
       const data = await result.json();
       return data;
     },
-   
   });
   return query;
 };
-export const getallCollectionbyBrand  = () => {
+export const getallCollectionbyBrand = () => {
   const query = useQuery<Collection[]>({
     queryKey: ["collection"],
     queryFn: async () => {
@@ -172,15 +195,14 @@ export const getFav = () => {
     queryFn: async () => {
       const result = await fetch("http://localhost:8080/favorite/1");
       const data = await result.json();
-      console.log(data)
+      console.log(data);
       return data;
       
     },
-
+  
   });
   return query;
 };
-
 
 const Delete = async (productId: string) => {
   const result = await fetch(

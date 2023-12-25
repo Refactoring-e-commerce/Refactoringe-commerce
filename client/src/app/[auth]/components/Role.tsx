@@ -1,38 +1,27 @@
-"use client";
-import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import React, { useState } from "react";
 import Brand from "@public/brand.png";
 import Creator from "@public/creator.png";
 import Userr from "@public/user.png";
-import { usePathname } from "next/navigation";
-import Signin from "../sign-in/page";
-import Signup from "../sign-up/page";
-
-const User = () => {
-  const pathname = usePathname();
-
+const Role = ({ setEmailV, setRoleV, setRole }) => {
   const [selectedImage, setSelectedImage] = useState<string>("");
 
   const handleImageClick = (image: string) => {
     setSelectedImage(image);
   };
 
-  const getParagraphContent = () => {
-    switch (selectedImage) {
-      case "brand":
-        return "Selected Brand ";
-      case "creator":
-        return "Selected Creator ";
-      case "user":
-        return "Selected User ";
-      default:
-        return "Explore the world of meta fashion";
+  const SubmitRole = (event: { preventDefault: () => void; }) => {
+    event.preventDefault();
+    if (selectedImage !== "") {
+      setRole(selectedImage);
+      setRoleV(false);
+      setEmailV(true);
     }
   };
 
   return (
     <div className="flex gap-10 items-center justify-center min-h-screen flex-col lg:flex-row">
-      <div className={`flex flex-col relative w-[600px]  overflow-hidden`}>
+      <div className={`flex flex-col justify-center items-center relative w-[600px]  overflow-hidden`}>
         <div className="flex  gap-5 md:flex-row items-center justify-center transition-all">
           <div
             className={`flex flex-col items-center hover:scale-105 cursor-pointer left-0`}
@@ -50,7 +39,7 @@ const User = () => {
             </p>
             <Image
               className={`${
-                selectedImage === "brand" ? " w-56" : "w-32"
+                selectedImage === "brand" ? " w-48" : "w-32"
               }   transition-all`}
               src={Brand}
               alt=""
@@ -73,7 +62,7 @@ const User = () => {
             </p>
             <Image
               className={`${
-                selectedImage === "creator" ? "w-52" : "w-32"
+                selectedImage === "creator" ? " w-44" : "w-32"
               }  transition-all `}
               src={Creator}
               alt=""
@@ -104,17 +93,14 @@ const User = () => {
             />
           </div>
         </div>
-        <p className="font-sans font-semibold text-xl text-center">
-          {getParagraphContent()}
-        </p>
+          <button
+            className="bg-white w-28 h-10 hover:opacity-80  transition-opacity rounded-md"
+            onClick={SubmitRole}
+          >
+            Next
+          </button>
       </div>
-      {pathname === "/auth/sign-in" ? (
-        <Signin selected={selectedImage} />
-      ) : (
-        <Signup selected={selectedImage} />
-      )}
     </div>
   );
 };
-
-export default User;
+export default Role;

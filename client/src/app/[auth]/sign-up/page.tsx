@@ -1,21 +1,21 @@
 "use client";
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-import { UserData } from "../../utils/useApi";
+import { signup } from "../../utils/useApi";
 import React, { useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { redirect, useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
+
 const Signup = ({ selected }: { selected: string }) => {
-  const router = useRouter();
-  const [isEmailFocused, setIsEmailFocused] = useState<boolean>(false);
-  const [isPasswordFocused, setIsPasswordFocused] = useState<boolean>(false);
-  const [isfullNameFocused, setIsfullNameFocused] = useState<boolean>(false);
+  const [isEmailFocused, setIsEmailFocused] = useState(false);
+  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+  const [isfullNameFocused, setIsfullNameFocused] = useState(false);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const fullNameRef = useRef<HTMLInputElement>(null);
   const dateRef = useRef<HTMLInputElement>(null);
+
   interface Data {
     role: string | undefined;
     email: string | undefined;
@@ -23,7 +23,16 @@ const Signup = ({ selected }: { selected: string }) => {
     fullName: string | undefined;
     birthDate: string | undefined;
   }
-  const { mutate, isPending } = UserData();
+
+  // const route = useRouter();
+  const { mutate, isPending, isSuccess } = useMutation({
+    mutationFn: signup,
+    onSuccess(response) {
+      // if (response.status == 201) {
+      //   redirect("/auth/sign-in");
+      // }
+    },
+  });
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -53,6 +62,7 @@ const Signup = ({ selected }: { selected: string }) => {
         fullName: fullNameRef.current?.value,
         birthDate: dateRef.current?.value,
       };
+
       mutate(data);
     }
   };
@@ -89,10 +99,10 @@ const Signup = ({ selected }: { selected: string }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-[400px] bg-white bg-opacity-20 rounded-[10px] flex-col flex justify-center items-center p-8"
+      className="w-[400px] bg-[#6689a7cf] rounded-[10px] flex-col flex justify-center items-center p-8"
     >
       <div className="  flex flex-col w-full ">
-        <p className="text-start mb-2 w-fit   text-[#7cbf39] text-3xl font-extrabold font-['SF Pro Display'] tracking-tight">
+        <p className="text-start mb-2 w-fit   text-white text-3xl font-extrabold font-['SF Pro Display'] tracking-tight">
           Sign Up
         </p>
 
@@ -101,9 +111,9 @@ const Signup = ({ selected }: { selected: string }) => {
             already Have accounte ?
           </span>{" "}
           <Link href="/auth/sign-in">
-            <span className="text-indigo-500 text-md font-medium font-['SF Pro Display'] tracking-tight">
+            <span className="text-white text-md font-medium font-['SF Pro Display'] tracking-tight">
               {"  "}
-              Sign Up
+              Sign In
             </span>
           </Link>
         </div>
@@ -114,7 +124,7 @@ const Signup = ({ selected }: { selected: string }) => {
               htmlFor="email"
               className={`${
                 isEmailFocused ? "translate-y-[-20px]" : "translate-y-[0px]"
-              } text-[#5948ac] transition-all absolute  text-lg font-normal font-['SF Pro Display'] tracking-tight`}
+              } text-white transition-all absolute  text-lg font-normal font-['SF Pro Display'] tracking-tight`}
             >
               Email Address
             </label>
@@ -132,12 +142,13 @@ const Signup = ({ selected }: { selected: string }) => {
               htmlFor="fullName"
               className={`${
                 isfullNameFocused ? "translate-y-[-20px]" : "translate-y-[0px]"
-              } text-[#5948ac] transition-all absolute text-lg font-normal font-['SF Pro Display'] tracking-tight`}
+              } text-white transition-all absolute text-lg font-normal font-['SF Pro Display'] tracking-tight`}
             >
               Full Name
             </label>
             <input
               id="fullName"
+              type="text"
               onFocus={() => handleAnimation("fullName")}
               onBlur={() => handleBlur("fullName")}
               ref={fullNameRef}
@@ -147,16 +158,16 @@ const Signup = ({ selected }: { selected: string }) => {
 
           <div className="relative">
             <label
-              typeof="password"
               htmlFor="password"
               className={`${
                 isPasswordFocused ? "translate-y-[-20px]" : "translate-y-[0px]"
-              } text-indigo-500 transition-all absolute text-lg font-normal font-['SF Pro Display'] tracking-tight`}
+              } text-white transition-all absolute text-lg font-normal font-['SF Pro Display'] tracking-tight`}
             >
               Password
             </label>
             <input
               id="password"
+              type="password"
               onFocus={() => handleAnimation("password")}
               onBlur={() => handleBlur("password")}
               ref={passwordRef}
@@ -166,7 +177,7 @@ const Signup = ({ selected }: { selected: string }) => {
 
           <div className="relative flex flex-col">
             <label
-              className={`text-indigo-500 transition-all  text-lg font-normal font-['SF Pro Display'] tracking-tight`}
+              className={`text-white transition-all  text-lg font-normal font-['SF Pro Display'] tracking-tight`}
             >
               Date Of Birth
             </label>
@@ -185,8 +196,8 @@ const Signup = ({ selected }: { selected: string }) => {
       </div>
       <button
         type="submit"
-        disabled={isPending}
-        className=" w-full  flex items-center font-semibold justify-center h-12 px-6 mt-4  outline-none   transition-colors duration-300 bg-white shadow text-black  focus:shadow-outline hover:bg-slate-200"
+        disabled={isPending || isSuccess}
+        className=" w-full rounded-md  flex items-center font-semibold justify-center h-12 px-6 mt-4  outline-none   transition-colors duration-300 bg-white shadow text-black  focus:shadow-outline hover:bg-slate-200"
       >
         {isPending ? "Sign Up..." : "Sign Up"}
       </button>
