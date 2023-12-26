@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { Mutation } from "react-query";
 
 export const signup = async (user: any) => {
   try {
@@ -75,7 +76,7 @@ export const updatePassword = async (data: any) => {
   }
 };
 
-// =========================================================================== Ahmed 
+// =========================================================================== Ahmed
 
 export const getAllproduct = () => {
   const query = useQuery<Product[]>({
@@ -83,7 +84,7 @@ export const getAllproduct = () => {
     queryFn: async () => {
       const result = await fetch("http://localhost:8080/Product/product/");
       const data = await result.json();
-      console.log(data,"sssss");
+
       return data;
     },
   });
@@ -98,12 +99,103 @@ export const filterbyPrice = () => {
         "http://localhost:8080/Product/product/:minprice/:maxprice"
       );
       const data = await result.json();
-      console.log(data);
+
       return data;
     },
   });
   return query;
 };
+
+export const getProductsByCategory = (categoryy: string) => {
+  const query = useMutation({
+    mutationKey: [categoryy],
+    mutationFn: async (category: string) => {
+      console.log(categoryy);
+      const result = await fetch(`http://localhost:8080/Product/${category}`);
+      const data = await result.json();
+      return data;
+    },
+    onSuccess: (data) => {
+      return data;
+    },
+  });
+  return query;
+};
+
+export const getOneProductByReference = () => {
+  const query = useQuery<Product[]>({
+    queryKey: ["Product"],
+    queryFn: async () => {
+      const result = await fetch(
+        "http://localhost:8080/Product/product/:reference"
+      );
+      const data = await result.json();
+      return data;
+    },
+  });
+  return query;
+};
+
+export const createProduct = () => {
+  const query = useQuery<Product[]>({
+    queryKey: ["Product"],
+    queryFn: async () => {
+      const result = await fetch("http://localhost:8080/Product/create");
+      const data = await result.json();
+      return data;
+    },
+  });
+  return query;
+};
+
+export const updateProduct = () => {
+  const query = useQuery<Product[]>({
+    queryKey: ["Product"],
+    queryFn: async () => {
+      const result = await fetch("http://localhost:8080/Product/update/:id");
+      const data = await result.json();
+      return data;
+    },
+  });
+  return query;
+};
+
+export const deleteProduct = () => {
+  const query = useQuery<Product[]>({
+    queryKey: ["Product"],
+    queryFn: async () => {
+      const result = await fetch("http://localhost:8080/Product/:id");
+      const data = await result.json();
+      return data;
+    },
+  });
+  return query;
+};
+
+export const getOneCreator = () => {
+  const query = useQuery<Creator[]>({
+    queryKey: ["Creator"],
+    queryFn: async () => {
+      const result = await fetch("http://localhost:8080/Creator/creator/:id");
+      const data = await result.json();
+      return data;
+    },
+  });
+  return query;
+};
+
+export const getAllCreator = () => {
+  const query = useQuery<Creator[]>({
+    queryKey: ["Creator"],
+    queryFn: async () => {
+      const result = await fetch("http://localhost:8080/Creator/creators/");
+      const data = await result.json();
+      return data;
+    },
+  });
+  return query;
+};
+
 // =========================================================================== Raja
 export const getoneBrandProfile = () => {
   const query = useQuery<Brand[]>({
@@ -159,6 +251,7 @@ const Addprod = async (productId: string) => {
   );
   console.log(response)
 };
+
 export const Addwallet = () => {
   return useMutation({
     mutationKey: ["Addprod"],
@@ -243,4 +336,4 @@ export const Addfav = () => {
     mutationFn: Addproduct,
   });
 };
-// =========================================================================== Nesrine 
+// =========================================================================== Nesrine
