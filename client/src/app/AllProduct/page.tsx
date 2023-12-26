@@ -3,43 +3,44 @@ import { getAllproduct } from "../utils/useApi";
 import { FcLikePlaceholder } from "react-icons/fc";
 import { FcLike } from "react-icons/fc";
 import { useState } from "react";
-import { Addfav } from "../utils/useApi";
+import { Addfav, Addwallet } from "../utils/useApi";
 // import { useRouter } from "next/router";
 import Link from "next/link";
-import {SlideBar} from "./Components/SlideBar"
+// import {SlideBar} from "./Components/SlideBar"
 
 
 // import { Error } from "./error";
 // import { Loading } from "./loading";
 
 const AllProduct = () => {
-  const { data } = getAllproduct();
+  const { data, isLoading ,isError} = getAllproduct();
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
     // const [showOptions, setShowOptions] = useState(false);
     const [isCartHovered, setIsCartHovered] = useState(false);
     const [like, setLike] = useState(false);
+    const [heart, setheart] = useState("white");
+    
 
     const [favorites, setFavorites] = useState([]);
  
   // const data: string[] = [];
-  console.log(data); 
+  console.log(typeof data,
+    'DDDDDDDDDDDDDDDDDDDDDDDDDDD'); 
 
-  const {mutate}= Addfav()
+  const {mutate}= Addfav() 
+  const {mutate:wallet} = Addwallet()
 
-  // if (isLoading) return <h1>loading</h1>;
-  // if (isError) return <h1>error</h1>;
-
-  //  const dislike = (id:any) => {
-  //    setLike(!like);
-       
-  //      } 
-     
+  if (isLoading) return <h1>loading</h1>;
+  if (isError) return <h1>error</h1>;
+  
     const Like =(productId: string)=>{
       mutate(productId) 
      
-
+    } 
+    const BuyNow =(productId:string)=>{
+      wallet(productId)
     }
        
   //    const showAllProducts = () => {
@@ -68,7 +69,7 @@ const AllProduct = () => {
   return (
     <div className="flex min-h-screen">
       {/* Sidebar with white background */}
-      <SlideBar/>
+      {/* <SlideBar/> */}
       
       <div className="w-3/4 p-4 ">
         <h1 className="mb-4 text-3xl  text-center font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
@@ -102,7 +103,7 @@ const AllProduct = () => {
         <br />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {data?.map((product: any) => (
+          {data?.map((product:any) => (
             <div
               key={product.id}
               className={`p-2 rounded-md shadow-md transition-transform transform bg-[#ffffff1a] hover:bg-transparent hover:scale-105 hover:opacity-80`}
@@ -132,20 +133,29 @@ const AllProduct = () => {
                   className="mr-4 "
                   onClick={() => { 
                      Like( product.id)
-                     setLike(true)  
+                     setLike(true) 
+                    //  setheart("red") 
                   }}
+                  // color={heart}
                  
                 >
 
                   {like ? <FcLikePlaceholder /> : <FcLike />}
                 </div>
-                </Link>
+                </Link> 
+                <Link 
+                href='/Wallet'
+                >
                 <button
                   className="mt-2 ml-2 bg-green-500 hover:bg-green-600 text-white px-4 py-1 rounded-md self-center"
-                  // onClick={() => addToFavorites(product)} // Also add the product to favorites on button click
+                  onClick={()=>{
+                    BuyNow(product.id)
+                  }}
                 >
                   Buy Now
-                </button>
+                </button> 
+                </Link>
+            
               </div>
             </div>
           ))}

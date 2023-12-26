@@ -75,15 +75,15 @@ export const updatePassword = async (data: any) => {
   }
 };
 
-// ===========================================================================
+// =========================================================================== Ahmed 
 
 export const getAllproduct = () => {
   const query = useQuery<Product[]>({
     queryKey: ["Product"],
     queryFn: async () => {
-      const result = await fetch("http://localhost:8080/Creator/creator/1");
+      const result = await fetch("http://localhost:8080/Product/product/");
       const data = await result.json();
-      console.log(data);
+      console.log(data,"sssss");
       return data;
     },
   });
@@ -104,7 +104,7 @@ export const filterbyPrice = () => {
   });
   return query;
 };
-
+// =========================================================================== Raja
 export const getoneBrandProfile = () => {
   const query = useQuery<Brand[]>({
     queryKey: ["Brand"],
@@ -112,7 +112,7 @@ export const getoneBrandProfile = () => {
       const result = await fetch("http://localhost:8080/brand/getone/1");
       const data = await result.json();
       return data;
-    },
+    }
   });
   return query;
 };
@@ -122,26 +122,30 @@ export const getallCollectionbyBrand = () => {
     queryFn: async () => {
       const result = await fetch("http://localhost:8080/collection/by-brand/1");
       const data = await result.json();
-      return data;
+      return data.data;
     },
   });
   return query;
 };
+
+// =========================================================================== Wided
 // Wallet :
 
-export const getwalletByid = () => {
-  const query = useQuery<Wallet[]>({
-    queryKey: ["Wallet"],
-    queryFn: async () => {
-      const result = await fetch(`http://localhost:8080/wallet/1`);
-      const data = await result.json();
-      console.log(data);
-      return data;
-    },
-    select: (data) => data,
-  });
-  return query;
-};
+// export const getwalletByid = () => {
+//   const query = useQuery<Wallet[]>({
+//     queryKey: ["Wallet"],
+//     queryFn: async () => {
+//       const result = await fetch(`http://localhost:8080/wallet/1`);
+//       const data = await result.json();
+//       console.log(data);
+//       return data;
+//     }
+//     // select: (data) => data,
+    
+//   });
+//   return query;
+// }; 
+
 const Addprod = async (productId: string) => {
   const response = await fetch(
     `http://localhost:8080/wallet/addwallet/1/${productId}`,
@@ -153,12 +157,13 @@ const Addprod = async (productId: string) => {
       body: JSON.stringify({ productId: productId, userId: 1 }),
     }
   );
-  console.log(response);
+  console.log(response)
 };
 export const Addwallet = () => {
   return useMutation({
     mutationKey: ["Addprod"],
     mutationFn: Addprod,
+  
   });
 };
 const DeleteFromwallet = async (productId: string) => {
@@ -169,17 +174,20 @@ const DeleteFromwallet = async (productId: string) => {
       headers: {
         "Content-Type": "application/json",
       },
-    }
+    } 
   );
-  return result.json();
+  console.log(result)
+  // return result.json();
 };
 
 export const deletewallet = () => {
   return useMutation({
     mutationKey: ["DeleteFromwallet"],
     mutationFn: DeleteFromwallet,
+  
   });
-};
+}; 
+
 
 // FavoriteList :
 
@@ -235,3 +243,4 @@ export const Addfav = () => {
     mutationFn: Addproduct,
   });
 };
+// =========================================================================== Nesrine 

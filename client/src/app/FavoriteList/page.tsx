@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { FcLikePlaceholder } from "react-icons/fc";
 import { FcLike } from "react-icons/fc";
-import { getFav, deleteFavoriteProduct } from "../utils/useApi";
+import { getFav, deleteFavoriteProduct , Addwallet } from "../utils/useApi";
 import { GoHeartFill } from "react-icons/go";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,13 +15,17 @@ const favoriteList = () => {
  console.log(data);
 
   const { mutate } = deleteFavoriteProduct();
+  const {mutate:wallet}= Addwallet()
 
 //   if (isError) return <h1>error</h1>;
 //   if (isLoading) return <h1>Loading</h1>;
 
   const dislike = (productId: string) => {
     mutate(productId);
-  };
+  }; 
+  const Buy =(productId: string)=>{
+    wallet(productId)
+  }
 
   return (
     <div>
@@ -60,14 +64,13 @@ const favoriteList = () => {
               </div>
 
               <div className="flex items-center">
-              <Link 
-                href="/FavoriteList"
-                >
+              
               <div
                   className="mr-4 "
                   onClick={() => { 
                      dislike(Product.Product.id)
                      setheart('white')
+                     window.location.reload()
                   
                   }} 
                   color={heart}
@@ -75,16 +78,23 @@ const favoriteList = () => {
 
                   {heart? <FcLikePlaceholder /> : <FcLike />}
                 </div>
-                </Link>
+            
                   
                 
                   
-                </div>
+                </div> 
+                <Link 
+                href='/Wallet'
+                >
                 <button
-                  className="mt-2 ml-2 bg-green-500 hover:bg-green-600 text-white px-4 py-1 rounded-md self-center"
+                  className="mt-2 ml-2 bg-green-500 hover:bg-green-600 text-white px-4 py-1 rounded-md self-center" 
+                  onClick={()=>{
+                    Buy(Product.Product.id)
+                  }}
                 >
                   Buy Now
-                </button>
+                </button> 
+                </Link>
               </div>
             
           ))}
