@@ -2,7 +2,7 @@
 import { getProductsByCategory, getAllproduct } from "../utils/useApi";
 import { FcLikePlaceholder } from "react-icons/fc";
 import { FcLike } from "react-icons/fc";
-import { useState  } from "react";
+import { useState } from "react";
 import { Addfav, Addwallet } from "../utils/useApi";
 // import { useRouter } from "next/router";
 import Link from "next/link";
@@ -11,35 +11,31 @@ import Link from "next/link";
 // import { Loading } from "./loading";
 
 const AllProduct = () => {
-  const { data, isLoading ,isError} = getAllproduct();
-    
-    const [heart, setheart] = useState("white");
-   
-    const [favorites, setFavorites] = useState([]);
-   const [selectedCategory, setSelectedCategory] = useState("");
-      const [showOptions, setShowOptions] = useState(false);
-      const [like, setLike] = useState(false);
-     
-    
-      const mutation = getProductsByCategory(selectedCategory);
-    
-      const [products, setProducts] = useState(data);
-  
-  const {mutate}= Addfav() 
-  const {mutate:wallet} = Addwallet()
+  const { data, isLoading, isError } = getAllproduct();
+
+  const [heart, setheart] = useState("white");
+
+  const [favorites, setFavorites] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [showOptions, setShowOptions] = useState(false);
+  const [like, setLike] = useState(false);
+
+  const mutation = getProductsByCategory(selectedCategory);
+
+  const [products, setProducts] = useState(data);
+
+  const { mutate } = Addfav();
+  const { mutate: wallet } = Addwallet();
 
   if (isLoading) return <h1>loading</h1>;
   if (isError) return <h1>error</h1>;
-  
-    const Like =(productId: string)=>{
-      mutate(productId) 
-     
-    } 
-    const BuyNow =(productId:string)=>{
-      wallet(productId)
-    }
-       
 
+  const Like = (productId: string) => {
+    mutate(productId);
+  };
+  const BuyNow = (productId: string) => {
+    wallet(productId);
+  };
 
   return (
     <div className="flex min-h-screen">
@@ -73,15 +69,10 @@ const AllProduct = () => {
                 >
                   <option value="T-Shirt">T-Shirt</option>
                   <option value="SWEAT-SHIRT">SWEAT-SHIRT</option>
-
-              
                 </select>
               </div>
             </div>
-            <button
-              className="text-white text-base font-medium mt-14 max-md:mt-10"
-            
-            >
+            <button className="text-white text-base font-medium mt-14 max-md:mt-10">
               Newrelease
             </button>
           </div>
@@ -91,7 +82,6 @@ const AllProduct = () => {
         <div className="flex items-stretch justify-between gap-5 mt-12 mb-[724px] pr-4 max-md:my-10"></div>
       </div>
 
-  
       <div className="w-3/4 p-4 ">
         <h1 className="mb-4 text-3xl  text-center font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
           <span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">

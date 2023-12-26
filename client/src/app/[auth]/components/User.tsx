@@ -33,7 +33,7 @@ const User = () => {
   return (
     <div className="flex gap-10 items-center justify-center min-h-screen flex-col lg:flex-row">
       <div className={`flex flex-col relative w-[600px]  overflow-hidden`}>
-        <div className="flex  gap-5 md:flex-row items-center justify-center transition-all">
+        <div className="flex flex-col  gap-5 md:flex-row items-center justify-center transition-all">
           <div
             className={`flex flex-col items-center hover:scale-105 cursor-pointer left-0`}
             id="brand"

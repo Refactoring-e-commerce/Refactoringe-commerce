@@ -4,10 +4,11 @@ import "react-toastify/dist/ReactToastify.css";
 import { signup } from "../../utils/useApi";
 import React, { useRef, useState } from "react";
 import Link from "next/link";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 
 const Signup = ({ selected }: { selected: string }) => {
+  const route = useRouter();
   const [isEmailFocused, setIsEmailFocused] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const [isfullNameFocused, setIsfullNameFocused] = useState(false);
@@ -24,17 +25,16 @@ const Signup = ({ selected }: { selected: string }) => {
     birthDate: string | undefined;
   }
 
-  // const route = useRouter();
-  const { mutate, isPending, isSuccess } = useMutation({
+  const { mutateAsync, isPending } = useMutation({
     mutationFn: signup,
-    onSuccess(response) {
-      // if (response.status == 201) {
-      //   redirect("/auth/sign-in");
-      // }
+    onSuccess: async (response) => {
+      if (response?.status == 201) {
+        route.push("/auth/sign-in");
+      }
     },
   });
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (
@@ -63,7 +63,7 @@ const Signup = ({ selected }: { selected: string }) => {
         birthDate: dateRef.current?.value,
       };
 
-      mutate(data);
+      await mutateAsync(data);
     }
   };
 
@@ -196,7 +196,7 @@ const Signup = ({ selected }: { selected: string }) => {
       </div>
       <button
         type="submit"
-        disabled={isPending || isSuccess}
+        disabled={isPending}
         className=" w-full rounded-md  flex items-center font-semibold justify-center h-12 px-6 mt-4  outline-none   transition-colors duration-300 bg-white shadow text-black  focus:shadow-outline hover:bg-slate-200"
       >
         {isPending ? "Sign Up..." : "Sign Up"}

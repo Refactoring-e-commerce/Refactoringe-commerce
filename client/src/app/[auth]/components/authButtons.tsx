@@ -1,14 +1,16 @@
 "use client";
-
 import facebook from "@public/facebook.png";
 import cherche from "@public/chercher.png";
 import apple from "@public/logo-apple.png";
 
 import Image from "next/image";
-const handleSignupGoogle = async () => {
-  window.open("http://localhost:8080/users/Google", "_self");
-};
+import axios from "axios";
 const AuthButtons = () => {
+  const handleSignupGoogle = async () => {
+    window.open("http://localhost:8080/users/Google", "_self");
+    // const a = await axios.get("http://localhost:8080/users/GoogleRedirect");
+    // console.log(a);
+  };
   return (
     <>
       <div
