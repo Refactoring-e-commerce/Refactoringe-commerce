@@ -1,5 +1,5 @@
-import { PrismaClient } from "@prisma/client";
-import { Request, Response } from "express";
+import { PrismaClient } from '@prisma/client';
+import { Request, Response, response } from 'express';
 
 const prisma = new PrismaClient();
 
@@ -106,14 +106,12 @@ export async function getCollections(
       error: error.message,
     });
   } finally {
-    await prisma.$disconnect(); // Disconnect Prisma Client
+    await prisma.$disconnect(); 
   }
 }
 
-export async function getCollectionsByBrand(
-  req: Request,
-  res: Response
-): Promise<void> {
+// the change
+export async function getCollectionsByBrand(req: Request, res: Response): Promise<void> {
   try {
     const { brandId } = req.params;
     const collections = await prisma.collection.findMany({
@@ -126,11 +124,7 @@ export async function getCollectionsByBrand(
         product: true,
       },
     });
-    res.status(200).json({
-      success: true,
-      message: "Collections retrieved successfully",
-      data: collections,
-    });
+    res.status(200).json(collections);
   } catch (error: any) {
     console.error("Error retrieving collections:", error);
     res.status(500).json({

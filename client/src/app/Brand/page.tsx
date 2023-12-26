@@ -8,7 +8,7 @@ import { IoIosAddCircleOutline } from 'react-icons/io'
 import CollectionComp from './Components/collectioncomp'
 import Formadd  from './Components/Formadd '
 import { getoneBrandProfile } from "../utils/useApi";
-import { log } from 'console'
+// import { log } from 'console'
 
 // import { Error } from "./error";
 // import { Loading } from "./loading";

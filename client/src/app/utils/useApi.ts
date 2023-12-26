@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import { Mutation } from "react-query";
 
 
@@ -199,7 +200,6 @@ export const getAllCreator = () => {
   });
   return query;
 };
-
 // =========================================================================== Raja
 export const getoneBrandProfile = () => {
   const query = useQuery<Brand[]>({
@@ -219,6 +219,68 @@ export const getallCollectionbyBrand = () => {
       const result = await fetch("http://localhost:8080/collection/by-brand/1");
       const data = await result.json();
       return data.data;
+    },
+  });
+  return query;
+};
+
+export const getCreatorsByBrand = () => {
+  const query = useQuery<Creator[]>({
+    queryKey: ["Creator"],
+    queryFn: async () => {
+      const result = await fetch("http://localhost:8080/Creator/creators");
+      const data = await result.json();
+      return data;
+    },
+  });
+  return query;
+};
+
+export const PostNewCollection = (input: string) => {
+  const query = useMutation({
+    mutationKey: ["Collection"],
+    mutationFn: async (object: { name: string; creatorId: string }) => {
+      const res: any = await axios.post(
+        `http://localhost:8080/collection/addcollection/${input}`,
+        object
+      );
+      console.log(res);
+      console.log(object);
+      localStorage.setItem("collection", JSON.stringify(res));
+      return res;
+    },
+    onError: (error, variables, context) => {
+      console.log(error);
+    },
+  });
+  return query;
+};
+
+export const PostNewProduct = () => {
+  const query = useMutation({
+    mutationKey: ["Product"],
+    mutationFn: async (object: {
+      name: string;
+      image: string[];
+      description: string;
+      price: number;
+      category: string;
+      quantity: number;
+      reference: string;
+      status: boolean;
+      collectionId: string;
+    }) => {
+      const res: any = await axios.post(
+        `http://localhost:8080/Product/create`,
+        object
+      );
+      console.log(res);
+      console.log(object);
+      localStorage.setItem("product", JSON.stringify(res));
+      return res;
+    },
+    onError: (error, variables, context) => {
+      console.log(error);
     },
   });
   return query;

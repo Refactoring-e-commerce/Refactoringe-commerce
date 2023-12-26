@@ -21,3 +21,15 @@ interface Collection {
   brandId:   String;
   creatorId: String;
 }
+
+interface Creator {
+  id: string,
+  fullName: String,
+  email:String ,     
+  password:String,
+  image: String,
+  cover:String,
+  bio: String,
+  brandId: String,
+  productId : string,
+} 
