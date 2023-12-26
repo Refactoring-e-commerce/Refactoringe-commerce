@@ -11,13 +11,13 @@ import Link from "next/link";
 import { log } from "console";
 const favoriteList = () => {
   const [heart, setheart] = useState("red");
-  const { data,isError,isLoading } = getFav();
- console.log(data);
+  const { data, isError, isLoading } = getFav();
+  console.log(data);
 
   const { mutate } = deleteFavoriteProduct();
 
-//   if (isError) return <h1>error</h1>;
-//   if (isLoading) return <h1>Loading</h1>;
+  //   if (isError) return <h1>error</h1>;
+  //   if (isLoading) return <h1>Loading</h1>;
 
   const dislike = (productId: string) => {
     mutate(productId);
@@ -37,64 +37,55 @@ const favoriteList = () => {
       </div>
 
       <div className="  justify-center flex flex-wrap gap-10 m-10 ">
-      {data?.map((Product: any) => (
-            <div
-              key={Product.id}
-              className={`p-2 rounded-md shadow-md transition-transform transform bg-[#ffffff1a] hover:bg-transparent hover:scale-105 hover:opacity-80`}
-            >
-              <img
-                src={Product.Product.image}
-                alt={Product.Product.name}
-                className="w-full h-100 object-cover mb-2 rounded-md"
-              />
-              <div className="text-xs font-medium font-['Poppins'] text-gray-500 mb-1">
-                {Product.Product.category}
+        {data?.map((Product: any) => (
+          <div
+            key={Product.id}
+            className={`p-2 rounded-md shadow-md transition-transform transform bg-[#ffffff1a] hover:bg-transparent hover:scale-105 hover:opacity-80`}
+          >
+            <img
+              src={Product.Product.image}
+              alt={Product.Product.name}
+              className="w-full h-100 object-cover mb-2 rounded-md"
+            />
+            <div className="text-xs font-medium font-['Poppins'] text-gray-500 mb-1">
+              {Product.Product.category}
+            </div>
+            <div className="flex">
+              <div className="text-sm text-white font-extralight mb-1 mr-20">
+                {Product.Product.name}
               </div>
-              <div className="flex">
-                <div className="text-sm text-white font-extralight mb-1 mr-20">
-                  {Product.Product.name}
-                </div>
-                <div className="text-sm font-bold text-green-600">
-                  ${Product.Product.price}
-                </div>
+              <div className="text-sm font-bold text-green-600">
+                ${Product.Product.price}
               </div>
+            </div>
 
-              <div className="flex items-center">
-              <Link 
-                href="/FavoriteList"
-                >
+            <div className="flex items-center">
               <div
-                  className="mr-4 "
-                  onClick={() => { 
-                     dislike(Product.Product.id)
-                     setheart('white')
-                  
-                  }} 
-                  color={heart}
-                >
-
-                  {heart? <FcLikePlaceholder /> : <FcLike />}
-                </div>
-                </Link>
-                  
-                
-                  
-                </div>
-                <button
-                  className="mt-2 ml-2 bg-green-500 hover:bg-green-600 text-white px-4 py-1 rounded-md self-center"
-                >
-                  Buy Now
-                </button>
+                className="mr-4 "
+                onClick={() => {
+                  dislike(Product.Product.id);
+                  setheart("white");
+                  window.location.reload();
+                }}
+                color={heart}
+              >
+                {heart ? <FcLikePlaceholder /> : <FcLike />}
               </div>
-            
-          ))}
-      </div> 
-      { data && data.length <= 0 && 
-      <div className="flex justify-center m-9">
-      <h1 className="text-xl text-white  ">U Haven't Liked Any Products yet</h1>
-    </div> }
+            </div>
+            <button className="mt-2 ml-2 bg-green-500 hover:bg-green-600 text-white px-4 py-1 rounded-md self-center">
+              Buy Now
+            </button>
+          </div>
+        ))}
       </div>
-  
+      {data && data.length <= 0 && (
+        <div className="flex justify-center m-9">
+          <h1 className="text-xl text-white  ">
+            U Haven't Liked Any Products yet
+          </h1>
+        </div>
+      )}
+    </div>
   );
-}; 
-export  default favoriteList
+};
+export default favoriteList;
