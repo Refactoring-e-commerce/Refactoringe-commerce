@@ -3,6 +3,7 @@
   password: string;
   birthDate?: string;
   fullName: string;
+  image?: string
 };
  export type Signup = {
   email: string;

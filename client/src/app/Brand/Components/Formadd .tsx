@@ -81,21 +81,17 @@ const Formadd = () => {
       console.error("No files selected for upload");
       return;
     }
-
     const imageIds = imageProduct.map((el) => el.name + v4());
-
     const uploadTasks = imageProduct.map((file, index) => {
       const imageStorageRef = ref(imageDb, `files/${imageIds[index]}`);
       return uploadBytes(imageStorageRef, file);
     });
-
     try {
       const snapshots = await Promise.all(uploadTasks);
 
       const downloadUrls = await Promise.all(
         snapshots.map((snapshot) => getDownloadURL(snapshot.ref))
       );
-
       console.log(downloadUrls);
       setImageUrl(downloadUrls.map(url => `'${url}'`));
     } catch (error) {

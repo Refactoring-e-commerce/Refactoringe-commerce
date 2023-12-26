@@ -204,7 +204,7 @@ export const getoneBrandProfile = () => {
       const result = await fetch("http://localhost:8080/brand/getone/1");
       const data = await result.json();
       return data;
-    },
+    }
   });
   return query;
 };
@@ -285,19 +285,21 @@ export const PostNewProduct = () => {
 // =========================================================================== Wided
 // Wallet :
 
-export const getwalletByid = () => {
-  const query = useQuery<Wallet[]>({
-    queryKey: ["Wallet"],
-    queryFn: async () => {
-      const result = await fetch(`http://localhost:8080/wallet/1`);
-      const data = await result.json();
-      console.log(data);
-      return data;
-    },
-    select: (data) => data,
-  });
-  return query;
-};
+// export const getwalletByid = () => {
+//   const query = useQuery<Wallet[]>({
+//     queryKey: ["Wallet"],
+//     queryFn: async () => {
+//       const result = await fetch(`http://localhost:8080/wallet/1`);
+//       const data = await result.json();
+//       console.log(data);
+//       return data;
+//     }
+//     // select: (data) => data,
+    
+//   });
+//   return query;
+// }; 
+
 const Addprod = async (productId: string) => {
   const response = await fetch(
     `http://localhost:8080/wallet/addwallet/1/${productId}`,
@@ -309,13 +311,14 @@ const Addprod = async (productId: string) => {
       body: JSON.stringify({ productId: productId, userId: 1 }),
     }
   );
-  console.log(response);
+  console.log(response)
 };
 
 export const Addwallet = () => {
   return useMutation({
     mutationKey: ["Addprod"],
     mutationFn: Addprod,
+  
   });
 };
 const DeleteFromwallet = async (productId: string) => {
@@ -326,17 +329,20 @@ const DeleteFromwallet = async (productId: string) => {
       headers: {
         "Content-Type": "application/json",
       },
-    }
+    } 
   );
-  return result.json();
+  console.log(result)
+  // return result.json();
 };
 
 export const deletewallet = () => {
   return useMutation({
     mutationKey: ["DeleteFromwallet"],
     mutationFn: DeleteFromwallet,
+  
   });
-};
+}; 
+
 
 // FavoriteList :
 

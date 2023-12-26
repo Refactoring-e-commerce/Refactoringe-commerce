@@ -13,5 +13,4 @@ route.put('/updateCreator/:collectionId', CollectionController.updateCollectionC
 route.put('/updatename/:collectionId', CollectionController.updateCollectionName);
 route.delete('/delatecollections/:collectionId',CollectionController.deleteOneCollection)
 
-
 export default route
