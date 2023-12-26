@@ -9,14 +9,14 @@ const VerifCode = ({ setCodeV, setUpdatePassV, email }) => {
   const code4 = useRef<HTMLInputElement>(null);
   const code5 = useRef<HTMLInputElement>(null);
   const inputs = [code1, code2, code3, code4, code5];
-  const [errorMessage, setErrorMessage] = useState<Boolean>(false);
-  let ErrMessage = "";
+  const [errorMessagePop, setErrorMessagePop] = useState<Boolean>(false);
+  const [ErrMessage, setErrMessage] = useState<string>("");
   const { mutateAsync } = useMutation({
     mutationFn: verifyCode,
     onSuccess: async (response) => {
       if (response?.status == 400) {
-        ErrMessage = "Please Add Your Email";
-        setErrorMessage(true);
+        setErrMessage("this code is invalid try again");
+        setErrorMessagePop(true);
       } else {
         setCodeV(false);
         setUpdatePassV(true);
@@ -62,7 +62,7 @@ const VerifCode = ({ setCodeV, setUpdatePassV, email }) => {
         console.error("Mutation error:", error);
       }
     } else {
-      ErrMessage = `Invalid code: ${fullCode}`;
+      setErrMessage(`Invalid code: ${fullCode}`);
     }
   };
 
@@ -87,7 +87,7 @@ const VerifCode = ({ setCodeV, setUpdatePassV, email }) => {
             />
           ))}
         </div>
-        {errorMessage && (
+        {errorMessagePop && (
           <p className="text-[red] pt-3  font-semibold flex justify-center items-center">
             {ErrMessage} <IoClose className="ml-1 text-2xl" />
           </p>

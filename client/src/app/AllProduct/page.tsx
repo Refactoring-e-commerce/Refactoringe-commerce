@@ -13,7 +13,7 @@ import {SlideBar} from "./Components/SlideBar"
 // import { Loading } from "./loading";
 
 const AllProduct = () => {
-  const { data } = getAllproduct();
+  const { data, isLoading ,isError} = getAllproduct();
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
@@ -24,12 +24,13 @@ const AllProduct = () => {
     const [favorites, setFavorites] = useState([]);
  
   // const data: string[] = [];
-  console.log(data); 
+  console.log(typeof data,
+    'DDDDDDDDDDDDDDDDDDDDDDDDDDD'); 
 
   const {mutate}= Addfav()
 
-  // if (isLoading) return <h1>loading</h1>;
-  // if (isError) return <h1>error</h1>;
+  if (isLoading) return <h1>loading</h1>;
+  if (isError) return <h1>error</h1>;
 
   //  const dislike = (id:any) => {
   //    setLike(!like);
@@ -102,7 +103,7 @@ const AllProduct = () => {
         <br />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {data?.map((product: any) => (
+          {data?.map((product:any) => (
             <div
               key={product.id}
               className={`p-2 rounded-md shadow-md transition-transform transform bg-[#ffffff1a] hover:bg-transparent hover:scale-105 hover:opacity-80`}

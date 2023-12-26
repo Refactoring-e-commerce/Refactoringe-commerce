@@ -4,7 +4,7 @@ const route = require("express").Router();
 
 
 
-route.post('/addcollection',CollectionController.addCollection)
+route.post('/addcollection/:brandId',CollectionController.addCollection)
 route.get('/collections/:collectionId',CollectionController.getCollection)
 route.get('/collections',CollectionController.getCollections)
 route.get('/by-brand/:brandId', CollectionController.getCollectionsByBrand);

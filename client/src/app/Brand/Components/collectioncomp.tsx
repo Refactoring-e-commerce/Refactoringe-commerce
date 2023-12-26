@@ -17,10 +17,12 @@ const CollectionComp = () => {
   if (collectionLoading) return <h1>Loading</h1>;
   if (collectionError) return <h1>Error</h1>;
 
+ 
+
   return (
     <div className="py-20  w-[840px] ">
       {data?.map((coll: any) => (
-        <div>
+        <div key={coll.id}>
           <div className=" relative top-[-10px] flex items-center">
             <img
               src={coll.Creator.image}
@@ -31,27 +33,15 @@ const CollectionComp = () => {
             </p>
           </div>
           <Carousel>
-            <div>
-              <img
-                className=" "
-                src={coll.product[0].image[0]}
-              />
-              <p className="legend">{coll.product[0].description}</p>
-            </div>
-            <div>
-              <img
-                className=""
-                src={coll.product[1].image[0]}
-              />
-              <p className="legend">{coll.product[1].description}</p>
-            </div>
-            <div>
-              <img
-                className=" "
-                src={coll.product[1].image[0]}
-              />
-              <p className="legend">{coll.product[1].description}</p>
-            </div>
+            {coll.product.map((element: any) => {;
+
+              return (
+                <div>
+                  <img className=" " src={element.image[0]} />
+                  <p className="legend">{element.description}</p>
+                </div>
+              );
+            })}
           </Carousel>
         </div>
       ))}

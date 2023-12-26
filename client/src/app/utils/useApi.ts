@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 export const signup = async (user: any) => {
   try {
@@ -11,7 +12,7 @@ export const signup = async (user: any) => {
     });
     return response;
   } catch (err) {
-    console.log(err);
+    return err;
   }
 };
 
@@ -45,7 +46,6 @@ export const forgetPassword = async (data: any) => {
     console.log("Unexpected Error:", err);
   }
 };
-
 export const verifyCode = async (data: any) => {
   try {
     const response = await fetch("http://localhost:8080/users/verifyCode", {
@@ -76,13 +76,13 @@ export const updatePassword = async (data: any) => {
   }
 };
 
-// ===========================================================================
+// =========================================================================== Ahmed
 
 export const getAllproduct = () => {
   const query = useQuery<Product[]>({
     queryKey: ["Product"],
     queryFn: async () => {
-      const result = await fetch("http://localhost:8080/Creator/creator/1");
+      const result = await fetch("http://localhost:8080/Product/product/");
       const data = await result.json();
       console.log(data);
       return data;
@@ -105,7 +105,7 @@ export const filterbyPrice = () => {
   });
   return query;
 };
-
+// =========================================================================== Raja
 export const getoneBrandProfile = () => {
   const query = useQuery<Brand[]>({
     queryKey: ["Brand"],
@@ -125,11 +125,74 @@ export const getallCollectionbyBrand = () => {
       const data = await result.json();
       return data;
     },
-
   });
   return query;
-}; 
-// Wallet : 
+};
+
+export const getCreatorsByBrand = () => {
+  const query = useQuery<Creator[]>({
+    queryKey: ["Creator"],
+    queryFn: async () => {
+      const result = await fetch("http://localhost:8080/Creator/creators");
+      const data = await result.json();
+      return data;
+    },
+  });
+  return query;
+};
+
+export const PostNewCollection = (input: string) => {
+  const query = useMutation({
+    mutationKey: ["Collection"],
+    mutationFn: async (object: { name: string; creatorId: string }) => {
+      const res: any = await axios.post(
+        `http://localhost:8080/collection/addcollection/${input}`,
+        object
+      );
+      console.log(res);
+      console.log(object);
+      localStorage.setItem("collection", JSON.stringify(res));
+      return res;
+    },
+    onError: (error, variables, context) => {
+      console.log(error);
+    },
+  });
+  return query;
+};
+
+export const PostNewProduct = () => {
+  const query = useMutation({
+    mutationKey: ["Product"],
+    mutationFn: async (object: {
+      name: string;
+      image: string[];
+      description: string;
+      price: number;
+      category: string;
+      quantity: number;
+      reference: string;
+      status: boolean;
+      collectionId: string;
+    }) => {
+      const res: any = await axios.post(
+        `http://localhost:8080/Product/create`,
+        object
+      );
+      console.log(res);
+      console.log(object);
+      localStorage.setItem("product", JSON.stringify(res));
+      return res;
+    },
+    onError: (error, variables, context) => {
+      console.log(error);
+    },
+  });
+  return query;
+};
+
+// =========================================================================== Wided
+// Wallet :
 
 export const getwalletByid = () => {
   const query = useQuery<Wallet[]>({
@@ -137,29 +200,32 @@ export const getwalletByid = () => {
     queryFn: async () => {
       const result = await fetch(`http://localhost:8080/wallet/1`);
       const data = await result.json();
-      console.log(data)
+      console.log(data);
       return data;
     },
     select: (data) => data,
   });
   return query;
 };
-const Addprod  = async (productId:string) => {
-  const response = await fetch(`http://localhost:8080/wallet/addwallet/1/${productId}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({productId:productId,userId:1}),
-  });
+const Addprod = async (productId: string) => {
+  const response = await fetch(
+    `http://localhost:8080/wallet/addwallet/1/${productId}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ productId: productId, userId: 1 }),
+    }
+  );
   console.log(response);
-}; 
-export const Addwallet =()=>{
+};
+export const Addwallet = () => {
   return useMutation({
-    mutationKey:["Addprod"],
-    mutationFn: Addprod
-  })
-} 
+    mutationKey: ["Addprod"],
+    mutationFn: Addprod,
+  });
+};
 const DeleteFromwallet = async (productId: string) => {
   const result = await fetch(
     `http://localhost:8080/wallet/delete/1/${productId}`,
@@ -180,13 +246,6 @@ export const deletewallet = () => {
   });
 };
 
-
-
-
-
-
-
-
 // FavoriteList :
 
 export const getFav = () => {
@@ -197,9 +256,7 @@ export const getFav = () => {
       const data = await result.json();
       console.log(data);
       return data;
-      
     },
-  
   });
   return query;
 };
@@ -222,22 +279,25 @@ export const deleteFavoriteProduct = () => {
     mutationKey: ["Delete"],
     mutationFn: Delete,
   });
-};  
+};
 
-const Addproduct  = async (productId:string) => {
-  const response = await fetch(`http://localhost:8080/favorite/add/1/${productId}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({productId:productId,userId:1}),
-  });
+const Addproduct = async (productId: string) => {
+  const response = await fetch(
+    `http://localhost:8080/favorite/add/1/${productId}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ productId: productId, userId: 1 }),
+    }
+  );
   console.log(response);
-}; 
-export const Addfav =()=>{
+};
+export const Addfav = () => {
   return useMutation({
-    mutationKey:["Addproduct"],
-    mutationFn: Addproduct
-  })
-}
-
+    mutationKey: ["Addproduct"],
+    mutationFn: Addproduct,
+  });
+};
+// =========================================================================== Nesrine

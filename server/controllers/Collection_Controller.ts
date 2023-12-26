@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { Request, Response } from 'express';
+import { Request, Response, response } from 'express';
 
 const prisma = new PrismaClient();
 
@@ -8,14 +8,14 @@ const prisma = new PrismaClient();
 
 export async function addCollection(req: Request, res: Response): Promise<void> {
   try {
-    const { name, brandId, creatorId } = req.body;
-    const brand = await prisma.brand.findUnique({ where: { id: brandId } });
+    const { name, creatorId } = req.body;
+    const {  brandId } = req.params;
     const creator = await prisma.creator.findUnique({ where: { id: creatorId } });
 
-    if (!brand || !creator) {
+    if ( !creator) {
       res.status(404).json({
         success: false,
-        message: 'Brand or Creator not found',
+        message: ' Creator not found',
       });
       return;
     }
@@ -102,11 +102,11 @@ export async function getCollections(req: Request, res: Response): Promise<void>
       error: error.message,
     });
   } finally {
-    await prisma.$disconnect(); // Disconnect Prisma Client
+    await prisma.$disconnect(); 
   }
 }
 
-
+// the change
 export async function getCollectionsByBrand(req: Request, res: Response): Promise<void> {
   try {
     const { brandId } = req.params;
@@ -120,11 +120,7 @@ export async function getCollectionsByBrand(req: Request, res: Response): Promis
         product: true,
       },
     });
-    res.status(200).json({
-      success: true,
-      message: 'Collections retrieved successfully',
-      data: collections,
-    });
+    res.status(200).json(collections);
   } catch (error: any) {
     console.error('Error retrieving collections:', error);
     res.status(500).json({
