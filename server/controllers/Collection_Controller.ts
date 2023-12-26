@@ -8,14 +8,14 @@ const prisma = new PrismaClient();
 
 export async function addCollection(req: Request, res: Response): Promise<void> {
   try {
-    const { name, brandId, creatorId } = req.body;
-    const brand = await prisma.brand.findUnique({ where: { id: brandId } });
+    const { name, creatorId } = req.body;
+    const {  brandId } = req.params;
     const creator = await prisma.creator.findUnique({ where: { id: creatorId } });
 
-    if (!brand || !creator) {
+    if ( !creator) {
       res.status(404).json({
         success: false,
-        message: 'Brand or Creator not found',
+        message: ' Creator not found',
       });
       return;
     }

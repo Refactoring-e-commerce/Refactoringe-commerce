@@ -1,30 +1,45 @@
 "use client";
-
-import { useState, useEffect } from "react";
+import { getProductsByCategory, getAllproduct } from "../utils/useApi";
+import { FcLikePlaceholder } from "react-icons/fc";
+import { FcLike } from "react-icons/fc";
+import { useState  } from "react";
+import { Addfav, Addwallet } from "../utils/useApi";
+// import { useRouter } from "next/router";
 import Link from "next/link";
-import { FcLike, FcLikePlaceholder } from "react-icons/fc";
-import { Addfav, getProductsByCategory, getAllproduct } from "../utils/useApi";
-import { log } from "console";
+
+// import { Error } from "./error";
+// import { Loading } from "./loading";
 
 const AllProduct = () => {
-  const { data, isLoading, isError, isFetched } = getAllproduct();
+  const { data, isLoading ,isError} = getAllproduct();
+    
+    const [heart, setheart] = useState("white");
+   
+    const [favorites, setFavorites] = useState([]);
+   const [selectedCategory, setSelectedCategory] = useState("");
+      const [showOptions, setShowOptions] = useState(false);
+      const [like, setLike] = useState(false);
+     
+    
+      const mutation = getProductsByCategory(selectedCategory);
+    
+      const [products, setProducts] = useState(data);
+  
+  const {mutate}= Addfav() 
+  const {mutate:wallet} = Addwallet()
 
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [showOptions, setShowOptions] = useState(false);
-  const [like, setLike] = useState(false);
-  const { mutate } = Addfav();
+  if (isLoading) return <h1>loading</h1>;
+  if (isError) return <h1>error</h1>;
+  
+    const Like =(productId: string)=>{
+      mutate(productId) 
+     
+    } 
+    const BuyNow =(productId:string)=>{
+      wallet(productId)
+    }
+       
 
-  const mutation = getProductsByCategory(selectedCategory);
-
-  const [products, setProducts] = useState(data);
-  // console.log(mutation.data);
-
-  console.log(products);
-
-  const Like = (productId: any) => {
-    mutate(productId);
-    setLike(!like);
-  };
 
   return (
     <div className="flex min-h-screen">

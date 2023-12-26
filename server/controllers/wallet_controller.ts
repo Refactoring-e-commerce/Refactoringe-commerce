@@ -67,7 +67,7 @@ export const addProductForUser = async (req: Request, res: Response): Promise<vo
         }
     } catch (error) {
         console.error('Error adding existing product for user:', error);
-        res.status(500).send({ success: false, message: 'Internal server error' });
+        res.status(500).send(error);
     }
 };
 
@@ -124,44 +124,107 @@ exports.deleteAll = async (req:Request, res:Response): Promise<void> => {
     } catch (error) {
         res.status(500).send(error);
     }
-};
+}; 
 
-// export const incrIntquantity = async (req: Request, res: Response): Promise<void> => {
-//     const userId = req.params.userId;
-//     const prodId = req.params.prodId;
 
+
+
+
+
+// export const incrIntquantity = async (
+//     req: Request,
+//     res: Response
+//   ): Promise<void> => {
+//     const {userId,prodId} = req.params;
+    
+  
 //     try {
-//         const user = await prisma.user.findUnique({
-//             where: { id: userId },
+//       const user = await prisma.user.findUnique({
+//         where: { id: userId },
+//       });
+  
+//       const productToUpdate = await prisma.product.findUnique({
+//         where: { id: prodId },
+//       });
+  
+//       if (!productToUpdate) {
+//         res.status(404).send({ success: false, message: 'Product not found' });
+//         return;
+//       }
+  
+//       if (productToUpdate.quantity > 0) {
+//         // Assuming that the quantity in the product should be greater than 0
+//         await prisma.wallet.update({
+//           where: {id:productToUpdate.id},    
+//           data: {initquantity : Initquantity +1 }
 //         });
-//         if (!user) {
-//              res.status(404).send({ success: false, message: 'User not found' });
-//         }
-
-//         const productToUpdate = await prisma.product.findUnique({
-//             where: { id: prodId },
-//         });
-//         if (!productToUpdate) {
-//             res.status(404).send({ success: false, message: 'Product not found' });
-//         }
-
-//         if (productToUpdate.Intquantity < productToUpdate.quantity) {
-//             productToUpdate.Intquantity = productToUpdate.Intquantity + 1;
-//         }
-
-//         await prisma.product.update({
-//             where: { id: prodId },
-//             data: { Intquantity: productToUpdate.Intquantity },
-//         });
-
+  
 //         res.status(200).send({
-//             success: true,message: 'Product updated for user successfully', product: productToUpdate,
+//           success: true,
+//           message: 'Product updated for user successfully',
+//           product: productToUpdate,
 //         });
+//       } else {
+//         res
+//           .status(400)
+//           .send({ success: false, message: 'Product quantity is already zero' });
+//       }
 //     } catch (error) {
-//         console.error('Error updating product quantity for user:', error);
-//         res.status(500).send({ success: false, message: 'Internal server error' });
+//       console.error('Error updating product quantity for user:', error);
+//       res.status(500).send({ success: false, message: 'Internal server error' });
 //     }
-// };
+//   };
+//   export const decrIntquantity = async (
+//     req: Request,
+//     res: Response
+//   ): Promise<void> => {
+//     const {userId,prodId} = req.params;
+    
+  
+//     try {
+//       const user = await prisma.user.findUnique({
+//         where: { id: userId },
+//       });
+  
+//       const productToUpdate = await prisma.product.findUnique({
+//         where: { id: prodId },
+//       });
+  
+//       if (!productToUpdate) {
+//         res.status(404).send({ success: false, message: 'Product not found' });
+//         return;
+//       }
+  
+//       if (productToUpdate.quantity > 0) {
+//         // Assuming that the quantity in the product should be greater than 0
+//         await prisma.wallet.update({
+//           where: {id:productToUpdate.id},    
+//           data: {initquantity : Initquantity -1 }
+//         });
+  
+//         res.status(200).send({
+//           success: true,
+//           message: 'Product updated for user successfully',
+//           product: productToUpdate,
+//         });
+//       } else {
+//         res
+//           .status(400)
+//           .send({ success: false, message: 'Product quantity is already zero' });
+//       }
+//     } catch (error) {
+//       console.error('Error updating product quantity for user:', error);
+//       res.status(500).send({ success: false, message: 'Internal server error' });
+//     }
+//   }; 
+
+
+
+
+
+
+
+
 
 
 
