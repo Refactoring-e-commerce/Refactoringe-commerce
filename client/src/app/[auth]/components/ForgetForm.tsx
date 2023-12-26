@@ -16,10 +16,10 @@ const ForgetForm = ({ setForgetPassForm }) => {
   return (
     <form
       action=""
-      className="flex backdrop-blur-md backdrop-contrast-50	 z-10 b flex-col items-center justify-center absolute lg:top-1/2 lg:left-1/2 lg:translate-x-[-50%] lg:translate-y-[-50%] w-full h-full "
+      className="flex backdrop-blur-md backdrop-contrast-50	 z-10 b flex-col items-center justify-center absolute top-10  lg:top-1/2 lg:left-1/2 lg:translate-x-[-50%] lg:translate-y-[-50%] w-full h-full "
     >
       <IoClose
-        className="absolute right-5 top-5 text-5xl cursor-pointer "
+        className="absolute right-5 z-50 top-5 text-5xl cursor-pointer "
         onClick={() => setForgetPassForm(false)}
       />
 

@@ -1,21 +1,23 @@
-import { PrismaClient } from '@prisma/client';
-import { Request, Response } from 'express';
+import { PrismaClient } from "@prisma/client";
+import { Request, Response } from "express";
 
 const prisma = new PrismaClient();
 
-
-
-
-export async function addCollection(req: Request, res: Response): Promise<void> {
+export async function addCollection(
+  req: Request,
+  res: Response
+): Promise<void> {
   try {
     const { name, creatorId } = req.body;
-    const {  brandId } = req.params;
-    const creator = await prisma.creator.findUnique({ where: { id: creatorId } });
+    const { brandId } = req.params;
+    const creator = await prisma.creator.findUnique({
+      where: { id: creatorId },
+    });
 
-    if ( !creator) {
+    if (!creator) {
       res.status(404).json({
         success: false,
-        message: ' Creator not found',
+        message: " Creator not found",
       });
       return;
     }
@@ -29,22 +31,23 @@ export async function addCollection(req: Request, res: Response): Promise<void> 
 
     res.status(201).json({
       success: true,
-      message: 'Collection added successfully',
+      message: "Collection added successfully",
       data: savedCollection,
     });
-  }  catch (error: any) { 
-    console.error('Error adding collection:', error);
+  } catch (error: any) {
+    console.error("Error adding collection:", error);
     res.status(500).json({
       success: false,
-      message: 'Internal server error',
+      message: "Internal server error",
       error: error.message,
     });
-  } 
+  }
 }
 
-
-
-export async function getCollection(req: Request, res: Response): Promise<void> {
+export async function getCollection(
+  req: Request,
+  res: Response
+): Promise<void> {
   try {
     const { collectionId } = req.params;
     const collection = await prisma.collection.findUnique({
@@ -58,28 +61,29 @@ export async function getCollection(req: Request, res: Response): Promise<void> 
     if (!collection) {
       res.status(404).json({
         success: false,
-        message: 'Collection not found',
+        message: "Collection not found",
       });
       return;
     }
     res.status(200).json({
       success: true,
-      message: 'Collection retrieved successfully',
+      message: "Collection retrieved successfully",
       data: collection,
     });
   } catch (error: any) {
-    console.error('Error retrieving collection:', error);
+    console.error("Error retrieving collection:", error);
     res.status(500).json({
       success: false,
-      message: 'Internal server error',
+      message: "Internal server error",
       error: error.message,
     });
   }
 }
 
-
-
-export async function getCollections(req: Request, res: Response): Promise<void> {
+export async function getCollections(
+  req: Request,
+  res: Response
+): Promise<void> {
   try {
     const collections = await prisma.collection.findMany({
       include: {
@@ -88,17 +92,17 @@ export async function getCollections(req: Request, res: Response): Promise<void>
         product: true,
       },
     });
-
+    
     res.status(200).json({
       success: true,
-      message: 'Collections retrieved successfully',
+      message: "Collections retrieved successfully",
       data: collections,
     });
   } catch (error: any) {
-    console.error('Error retrieving collections:', error);
+    console.error("Error retrieving collections:", error);
     res.status(500).json({
       success: false,
-      message: 'Internal server error',
+      message: "Internal server error",
       error: error.message,
     });
   } finally {
@@ -106,8 +110,10 @@ export async function getCollections(req: Request, res: Response): Promise<void>
   }
 }
 
-
-export async function getCollectionsByBrand(req: Request, res: Response): Promise<void> {
+export async function getCollectionsByBrand(
+  req: Request,
+  res: Response
+): Promise<void> {
   try {
     const { brandId } = req.params;
     const collections = await prisma.collection.findMany({
@@ -122,22 +128,23 @@ export async function getCollectionsByBrand(req: Request, res: Response): Promis
     });
     res.status(200).json({
       success: true,
-      message: 'Collections retrieved successfully',
+      message: "Collections retrieved successfully",
       data: collections,
     });
   } catch (error: any) {
-    console.error('Error retrieving collections:', error);
+    console.error("Error retrieving collections:", error);
     res.status(500).json({
       success: false,
-      message: 'Internal server error',
+      message: "Internal server error",
       error: error.message,
     });
   }
 }
 
-
-
-export async function getCollectionsByCreator(req: Request, res: Response): Promise<void> {
+export async function getCollectionsByCreator(
+  req: Request,
+  res: Response
+): Promise<void> {
   try {
     const { creatorId } = req.params;
     const collections = await prisma.collection.findMany({
@@ -153,20 +160,23 @@ export async function getCollectionsByCreator(req: Request, res: Response): Prom
 
     res.status(200).json({
       success: true,
-      message: 'Collections retrieved successfully',
+      message: "Collections retrieved successfully",
       data: collections,
     });
   } catch (error: any) {
-    console.error('Error retrieving collections:', error);
+    console.error("Error retrieving collections:", error);
     res.status(500).json({
       success: false,
-      message: 'Internal server error',
+      message: "Internal server error",
       error: error.message,
     });
   }
 }
 
-export async function updateCollectionCreator(req: Request, res: Response): Promise<void> {
+export async function updateCollectionCreator(
+  req: Request,
+  res: Response
+): Promise<void> {
   try {
     const { collectionId } = req.params;
     const { creatorId } = req.body;
@@ -177,7 +187,7 @@ export async function updateCollectionCreator(req: Request, res: Response): Prom
     if (!existingCollection) {
       res.status(404).json({
         success: false,
-        message: 'Collection not found',
+        message: "Collection not found",
       });
       return;
     }
@@ -188,39 +198,39 @@ export async function updateCollectionCreator(req: Request, res: Response): Prom
     if (!newCreator) {
       res.status(404).json({
         success: false,
-        message: 'New creator not found',
+        message: "New creator not found",
       });
       return;
     }
     const updatedCollection = await prisma.collection.update({
       where: { id: collectionId },
       data: {
-      Creator: { connect: { id: creatorId } },
+        Creator: { connect: { id: creatorId } },
       },
     });
     res.status(200).json({
       success: true,
-      message: 'Collection updated successfully',
+      message: "Collection updated successfully",
       data: updatedCollection,
     });
   } catch (error: any) {
-    console.error('Error updating collection creator:', error);
+    console.error("Error updating collection creator:", error);
     res.status(500).json({
       success: false,
-      message: 'Internal server error',
+      message: "Internal server error",
       error: error.message,
     });
   }
 }
 
-
-
-
-export async function updateCollectionName(req: Request, res: Response): Promise<void> {
+export async function updateCollectionName(
+  req: Request,
+  res: Response
+): Promise<void> {
   try {
     const { collectionId } = req.params;
     const { name } = req.body;
-    
+
     const existingCollection = await prisma.collection.findUnique({
       where: { id: collectionId },
     });
@@ -228,7 +238,7 @@ export async function updateCollectionName(req: Request, res: Response): Promise
     if (!existingCollection) {
       res.status(404).json({
         success: false,
-        message: 'Collection not found',
+        message: "Collection not found",
       });
       return;
     }
@@ -242,22 +252,23 @@ export async function updateCollectionName(req: Request, res: Response): Promise
 
     res.status(200).json({
       success: true,
-      message: 'Collection updated successfully',
+      message: "Collection updated successfully",
       data: updatedCollection,
     });
   } catch (error: any) {
-    console.error('Error updating collection name:', error);
+    console.error("Error updating collection name:", error);
     res.status(500).json({
       success: false,
-      message: 'Internal server error',
+      message: "Internal server error",
       error: error.message,
     });
   }
 }
 
-
-
-export async function deleteOneCollection(req: Request, res: Response): Promise<void> {
+export async function deleteOneCollection(
+  req: Request,
+  res: Response
+): Promise<void> {
   try {
     const { collectionId } = req.params;
     const existingCollection = await prisma.collection.findUnique({
@@ -267,7 +278,7 @@ export async function deleteOneCollection(req: Request, res: Response): Promise<
     if (!existingCollection) {
       res.status(404).json({
         success: false,
-        message: 'Collection not found',
+        message: "Collection not found",
       });
       return;
     }
@@ -276,17 +287,14 @@ export async function deleteOneCollection(req: Request, res: Response): Promise<
     });
     res.status(200).json({
       success: true,
-      message: 'Collection deleted successfully',
+      message: "Collection deleted successfully",
     });
   } catch (error: any) {
-    console.error('Error deleting collection:', error);
+    console.error("Error deleting collection:", error);
     res.status(500).json({
       success: false,
-      message: 'Internal server error',
+      message: "Internal server error",
       error: error.message,
     });
-  } 
+  }
 }
-
-
-

@@ -1,18 +1,22 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Mutation } from "react-query";
 
+
 export const signup = async (user: any) => {
   try {
     const response = await fetch("http://localhost:8080/users/signup", {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(user),
     });
+    console.log(response);
+
     return response;
   } catch (err) {
-    return err;
+    console.log("Unexpected Error:", err);
   }
 };
 

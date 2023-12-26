@@ -2,14 +2,13 @@ import User from "@/[auth]/components/User";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 export const metadata = {
-  title: "User Data",
+  title: "Authentication",
 };
 export default async function SignInPage() {
   const cookieStore = cookies();
-  const token = cookieStore.get("access_token");
-  // console.log(token?.value);
+  const token = cookieStore.get("token");
 
-  // if (token) redirect("/");
+  if (token) redirect("/");
 
   return <User />;
 }

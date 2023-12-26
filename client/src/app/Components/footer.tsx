@@ -4,7 +4,7 @@ import React from 'react';
 
 const Footer: React.FC = () => {
   return (
-    <footer className="dark:bg-gray-900">
+    <footer className="dark:bg-gray-900 ">
       <div className="mx-auto  w-full max-w-screen  py-6 lg:py-8">
         <div className="flex flex-col md:flex-row w-full">
           <div className="flex w-screen justify-around items-center">
@@ -91,9 +91,7 @@ const Footer: React.FC = () => {
 
           {/* Social Media Icons */}
 
-          {/* <div className="flex mt-4 sm:justify-center sm:mt-0"> */}
-            {/* Add your social media links and icons here */}
-          {/* </div> */}
+       
 
         </div>
       </div>

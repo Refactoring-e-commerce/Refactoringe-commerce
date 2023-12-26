@@ -11,7 +11,6 @@ userRouter.get(
 userRouter.get("/GoogleRedirect", UserController.signInGoogle);
 userRouter.post("/signin", UserController.SignIn);
 userRouter.post("/signup", UserController.SignUp);
-userRouter.get("/logout", UserController.logout);
 userRouter.post("/forgetPassword", UserController.forgetPassword);
 userRouter.post("/verifyCode", UserController.verifyingCode);
 userRouter.post("/updatePassword", UserController.updatePassword);
