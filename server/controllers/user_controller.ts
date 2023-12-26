@@ -42,6 +42,8 @@ const CreateByRole = async (
         email,
         fullName,
         birthDate,
+        image:
+          "https://cdn.icon-icons.com/icons2/2468/PNG/512/user_icon_149329.png",
         password: await bcrypt.hash(password, 10),
       };
       return await prisma.user.create({
@@ -51,6 +53,8 @@ const CreateByRole = async (
       const brandData: any = {
         email,
         fullName,
+        image:
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/User_icon-cp.svg/728px-User_icon-cp.svg.png",
         password: await bcrypt.hash(password, 10),
       };
       return await prisma.brand.create({
@@ -60,10 +64,12 @@ const CreateByRole = async (
       const creatorData: any = {
         email,
         fullName,
+        image:
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/User_icon-cp.svg/728px-User_icon-cp.svg.png",
         password: await bcrypt.hash(password, 10),
       };
       return await prisma.creator.create({
-        data: creatorData ,
+        data: creatorData,
       });
   }
 };
@@ -85,6 +91,7 @@ export const SignIn = async (req: Request, res: Response) => {
             role: role,
             userId: toLogin.id,
             fullName: toLogin.fullName,
+            image: toLogin.image,
           },
           "ahmed",
           { expiresIn: "1h" }
@@ -127,11 +134,6 @@ export const SignUp = async (req: Request, res: Response) => {
   } catch (err: any) {
     res.status(500).send({ error: err.message });
   }
-};
-
-export const logout = async (req: Request, res: Response) => {
-  req.cookies.destroy();
-  res.status(200).send("user has been logged out");
 };
 
 const verificationCodes: Record<string, number> = {};

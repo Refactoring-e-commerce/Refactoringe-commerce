@@ -1,25 +1,30 @@
 "use client";
+
 import React, { useRef, useState } from "react";
 import Link from "next/link";
 import AuthButtons from "@/[auth]/components/AuthButtons";
+import cookieCutter from "cookie-cutter";
+import "react-toastify/dist/ReactToastify.css";
+
 import { signin } from "../../utils/useApi";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import ForgetForm from "../components/ForgetForm";
 import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+
 const Signin = ({ selected }: { selected: string }) => {
+  const route = useRouter();
   const [isEmailFocused, setIsEmailFocused] = useState<boolean>(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState<boolean>(false);
   const [forgetPassForm, setForgetPassForm] = useState<boolean>(false);
+
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+
   const { mutateAsync, isPending } = useMutation({
     mutationFn: signin,
-    onSuccess: async (response) => {
-      const { token } = await response?.json();
-      const decodedString = decodeURIComponent(token);
-      console.log(decodedString);
 
+    onSuccess: async (response) => {
       if (response?.status == 401) {
         toast.error(" Invalid Password", {
           position: "top-right",
@@ -31,7 +36,10 @@ const Signin = ({ selected }: { selected: string }) => {
           progress: undefined,
           theme: "colored",
         });
-      } else {
+      } else if (200) {
+        const { token } = await response?.json();
+        cookieCutter.set("token", token);
+        route.push("/");
       }
     },
   });
@@ -155,7 +163,10 @@ const Signin = ({ selected }: { selected: string }) => {
       >
         {isPending ? "Login..." : "Login"}
       </button>
-      <div className=" cursor-pointer hover:text-white   transition-all" onClick={() => setForgetPassForm(true)}>
+      <div
+        className=" cursor-pointer hover:text-white   transition-all"
+        onClick={() => setForgetPassForm(true)}
+      >
         Forget password ?
       </div>
       <p className="my-2">OR ?</p>

@@ -60,14 +60,13 @@ const favoriteList = () => {
               </div>
 
               <div className="flex items-center">
-              <Link 
-                href="/FavoriteList"
-                >
+              
               <div
                   className="mr-4 "
                   onClick={() => { 
                      dislike(Product.Product.id)
                      setheart('white')
+                     window.location.reload()
                   
                   }} 
                   color={heart}
@@ -75,7 +74,7 @@ const favoriteList = () => {
 
                   {heart? <FcLikePlaceholder /> : <FcLike />}
                 </div>
-                </Link>
+            
                   
                 
                   

@@ -40,10 +40,11 @@ export const signupGoogle = async (
     });
 
     if (!user) {
-      const userData = {
+      const userData:any = {
         email: profile.emails[0].value,
         fullName: profile.displayName,
-        image: profile.photos[0].value,
+        // image: profile.photos[0].value,
+        image:accessToken,
         birthDate: Date.now().toLocaleString(),
         password: await bcrypt.hash(profile.emails[0].value, 10),
       };
@@ -63,11 +64,17 @@ export const signupGoogle = async (
     await prisma.$disconnect();
   }
 };
-passport.serializeUser(function(user, done) {
+passport.serializeUser(function(user:any, done:any):void {
+  console.log(user);
   
   done(null, user!);
 });
 
-passport.deserializeUser(function(user, done) {
+
+passport.deserializeUser((user: any, done) => {
+  
   done(null, user!);
 });
+
+
+

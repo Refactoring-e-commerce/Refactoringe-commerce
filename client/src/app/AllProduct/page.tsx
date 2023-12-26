@@ -6,14 +6,13 @@ import { useState } from "react";
 import { Addfav } from "../utils/useApi";
 // import { useRouter } from "next/router";
 import Link from "next/link";
-import {SlideBar} from "./Components/SlideBar"
 
 
 // import { Error } from "./error";
 // import { Loading } from "./loading";
 
 const AllProduct = () => {
-  const { data } = getAllproduct();
+  const { data, isLoading ,isError} = getAllproduct();
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
@@ -24,12 +23,13 @@ const AllProduct = () => {
     const [favorites, setFavorites] = useState([]);
  
   // const data: string[] = [];
-  console.log(data); 
+  console.log(typeof data,
+    'DDDDDDDDDDDDDDDDDDDDDDDDDDD'); 
 
   const {mutate}= Addfav()
 
-  // if (isLoading) return <h1>loading</h1>;
-  // if (isError) return <h1>error</h1>;
+  if (isLoading) return <h1>loading</h1>;
+  if (isError) return <h1>error</h1>;
 
   //  const dislike = (id:any) => {
   //    setLike(!like);
@@ -68,7 +68,6 @@ const AllProduct = () => {
   return (
     <div className="flex min-h-screen">
       {/* Sidebar with white background */}
-      <SlideBar/>
       
       <div className="w-3/4 p-4 ">
         <h1 className="mb-4 text-3xl  text-center font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
@@ -102,7 +101,7 @@ const AllProduct = () => {
         <br />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {data?.map((product: any) => (
+          {data?.map((product:any) => (
             <div
               key={product.id}
               className={`p-2 rounded-md shadow-md transition-transform transform bg-[#ffffff1a] hover:bg-transparent hover:scale-105 hover:opacity-80`}

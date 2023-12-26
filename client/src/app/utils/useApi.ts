@@ -1,17 +1,21 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 
+
 export const signup = async (user: any) => {
   try {
     const response = await fetch("http://localhost:8080/users/signup", {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(user),
     });
+    console.log(response);
+
     return response;
   } catch (err) {
-    return err;
+    console.log("Unexpected Error:", err);
   }
 };
 
@@ -75,13 +79,14 @@ export const updatePassword = async (data: any) => {
   }
 };
 
-// ===========================================================================
+
+// =========================================================================== Ahmed
 
 export const getAllproduct = () => {
   const query = useQuery<Product[]>({
     queryKey: ["Product"],
     queryFn: async () => {
-      const result = await fetch("http://localhost:8080/Creator/creator/1");
+      const result = await fetch("http://localhost:8080/Product/product/");
       const data = await result.json();
       console.log(data);
       return data;
@@ -104,7 +109,7 @@ export const filterbyPrice = () => {
   });
   return query;
 };
-
+// =========================================================================== Raja
 export const getoneBrandProfile = () => {
   const query = useQuery<Brand[]>({
     queryKey: ["Brand"],
@@ -122,11 +127,13 @@ export const getallCollectionbyBrand = () => {
     queryFn: async () => {
       const result = await fetch("http://localhost:8080/collection/by-brand/1");
       const data = await result.json();
-      return data;
+      return data.data;
     },
   });
   return query;
 };
+
+// =========================================================================== Wided
 // Wallet :
 
 export const getwalletByid = () => {
@@ -235,3 +242,4 @@ export const Addfav = () => {
     mutationFn: Addproduct,
   });
 };
+// =========================================================================== Nesrine
