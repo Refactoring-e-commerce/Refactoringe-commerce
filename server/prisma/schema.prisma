@@ -1,3 +1,5 @@
+
+
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
@@ -32,7 +34,8 @@ model Wallet {
   userId String
 
   Product   Product @relation(fields: [productId], references: [id])
-  productId String
+  productId String 
+
 }
 
 model Product {

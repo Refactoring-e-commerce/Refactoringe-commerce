@@ -33,7 +33,7 @@ const CollectionComp = () => {
           <Carousel>
             {coll.product.map((element: any) => {
               console.log(element);
-
+              
               return (
                 <div>
                   <img className=" " src={element.image[0]} />

@@ -1,6 +1,6 @@
 import express from 'express';
 
-import {createProduct,updateProduct,getOneProductByReference, getAllProduct,deleteProduct,filterbyPrice} from "../controllers/product_controller";
+import {getProductsByCategory, createProduct,updateProduct,getOneProductByReference, getAllProduct,deleteProduct,filterbyPrice} from "../controllers/product_controller";
 
 const router = express.Router();
 
@@ -10,6 +10,8 @@ router.post('/create',createProduct );
 router.put('/update/:id', updateProduct);
 router.delete('/:id', deleteProduct);
 router.get('/product/:minprice/:maxprice', filterbyPrice);
+router.get('/:category', getProductsByCategory);
+
 
 
 export default router

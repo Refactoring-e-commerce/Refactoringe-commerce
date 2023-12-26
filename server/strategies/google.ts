@@ -38,7 +38,7 @@ export const signupGoogle = async (
     const user = await prisma.user.findUnique({
       where: { email: profile.emails[0].value },
     });
-
+    
     if (!user) {
       const userData:any = {
         email: profile.emails[0].value,
@@ -48,6 +48,7 @@ export const signupGoogle = async (
         birthDate: Date.now().toLocaleString(),
         password: await bcrypt.hash(profile.emails[0].value, 10),
       };
+      console.log(userData);
 
       const newUser = await prisma.user.create({
         data: userData,

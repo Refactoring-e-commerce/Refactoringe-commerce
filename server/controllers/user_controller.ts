@@ -34,11 +34,11 @@ const findUserByRole = async (role: string, email: string) => {
 
 const CreateByRole = async (
   role: string,
-  { email, fullName, birthDate, password }: any
+  { email, fullName, birthDate, password }:any
 ) => {
   switch (role) {
     case "user":
-      const userData: any = {
+      const userData:any = {
         email,
         fullName,
         birthDate,
