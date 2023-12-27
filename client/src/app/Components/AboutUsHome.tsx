@@ -19,14 +19,16 @@ export const AboutUsHome = () => {
         selected, exclusive collections that redefine the very essence of sports
         sophistication.
       </p>
-      <div className="lg:flex-row-reverse flex flex-col items-center justify-between mt-20">
+      <div className="lg:flex-row-reverse relative justify-center flex flex-col items-center md:justify-between mt-20">
         <div
+        className=""
           style={{
             width: 374,
             height: 447,
             right: 0,
             marginTop: 10,
             position: "relative",
+            
           }}
         >
           <img
@@ -39,12 +41,13 @@ export const AboutUsHome = () => {
               boxShadow: "0px 0px 25px rgba(0, 0, 0, 0.35)",
               borderRadius: 10,
             }}
-            src="https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_2000,h_2000/global/524930/01/mod05/fnd/EEA/fmt/png/PUMA-FIT-Ultrabreathe-Men's-Tee"
+            className="h-full"
+          src="https://cdn.shopify.com/s/files/1/2513/1876/products/1jacketblackcalisthenics_300x.jpg?v=1658142896"
           />
         </div>
         <div className="mt-15 items-center md:text-[#eee]  relative flex flex-col justify-center">
           <h1
-            style={{ textShadow: "0 0 4px #00000070" }}
+            style={{ textShadow: "#5e5959 0px 0px 12px" }}
             className="  text-6xl text-black font-sans font-bold mt-2"
           >
             Fashion That Speaks

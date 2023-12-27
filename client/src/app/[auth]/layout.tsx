@@ -7,8 +7,9 @@ export const metadata = {
 export default async function SignInPage() {
   const cookieStore = cookies();
   const token = cookieStore.get("token");
+console.log(token);
 
-  if (token) redirect("/");
+  // if (token) redirect("/");
 
   return <User />;
 }

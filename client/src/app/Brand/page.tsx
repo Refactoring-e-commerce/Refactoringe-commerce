@@ -8,6 +8,8 @@ import { IoIosAddCircleOutline } from 'react-icons/io'
 import CollectionComp from './Components/collectioncomp'
 import Formadd  from './Components/Formadd '
 import { getoneBrandProfile } from "../utils/useApi";
+import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
 // import { log } from 'console'
 
 // import { Error } from "./error";
@@ -16,7 +18,9 @@ import { getoneBrandProfile } from "../utils/useApi";
 
 
 const BrandProfile = () => {
-  const { data, isLoading, isError }: { data: any; isLoading: boolean; isError: boolean } = getoneBrandProfile();
+  const token = Cookies.get("token");
+  const userData: any = token ? jwtDecode(token) : null;
+  const { data, isLoading, isError }: { data: any; isLoading: boolean; isError: boolean } = getoneBrandProfile(userData.userId);
   const [show,setShow] = useState(false)
   if (isLoading) {return <h1>Loading</h1>; }
   if (isError) {return <h1>Error</h1>;}
