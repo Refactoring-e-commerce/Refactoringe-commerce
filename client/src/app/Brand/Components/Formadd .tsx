@@ -11,11 +11,15 @@ import {
 import {imageDb} from "../../firebase.config"
 import { getDownloadURL, ref, uploadBytes ,uploadBytesResumable} from 'firebase/storage'
 import { v4  } from 'uuid'
+import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
 
 const Formadd = () => {
   //  new collection
   const [nameCollection, setNameCollection] = useState("");
   const [creatorId, setCreatorId] = useState("");
+  const token = Cookies.get("token");
+  const userData: any = token ? jwtDecode(token) : null;
 
   // new product
   const [nameProduct, setNameProduct] = useState("");
@@ -52,9 +56,9 @@ const Formadd = () => {
     data: any;
     isLoading: boolean;
     isError: boolean;
-  } = getallCollectionbyBrand();
+  } = getallCollectionbyBrand(userData.userId);
 
-  const addNewCollection = PostNewCollection("1");
+  const addNewCollection = PostNewCollection(userData.userId);
   const addNewProduct = PostNewProduct();
 
   if (creatorLoading || collectionLoading) {
@@ -65,7 +69,7 @@ const Formadd = () => {
   }
 
   const filteredCreator = creatorData.filter((ele: any) => {
-    return ele.brandId === "1";
+    return ele.brandId === userData.userId;
   });
 
   // const handleClick = async () => {
@@ -160,7 +164,7 @@ console.log(imageUrl,"jhbjhvjvjhvjhvbjb");
         <button
           type="submit"
           className="text-white mb-5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          onClick={() => {
+          onClick={(e) => {
             addNewCollection.mutate({
               name: nameCollection,
               creatorId: creatorId,
@@ -189,7 +193,7 @@ console.log(imageUrl,"jhbjhvjvjhvjhvbjb");
         <button
           type="submit"
           className="text-white mb-5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          onClick={() => {
+          onClick={(e) => {
             addNewCollection.mutate({
               name: nameCollection,
               creatorId: creatorId,
@@ -299,7 +303,7 @@ console.log(imageUrl,"jhbjhvjvjhvjhvbjb");
         <button
           type="submit"
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          onClick={() => {
+          onClick={(e) => {
             addNewProduct.mutate({
               name: nameProduct,
               image: imageUrl,

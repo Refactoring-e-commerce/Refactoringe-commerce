@@ -7,17 +7,19 @@ import { BsBag } from "react-icons/bs";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import "react-toastify/dist/ReactToastify.css";
 import { getallCollectionbyBrand } from "../../utils/useApi";
-
+import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
 const CollectionComp = () => {
+  const token = Cookies.get("token");
+  const userData: any = token ? jwtDecode(token) : null;
+
   const {
     data,
     isLoading: collectionLoading,
     isError: collectionError,
-  } = getallCollectionbyBrand();
+  } = getallCollectionbyBrand(userData.userId);
   if (collectionLoading) return <h1>Loading</h1>;
   if (collectionError) return <h1>Error</h1>;
-
- 
 
   return (
     <div className="py-20  w-[840px] ">
@@ -33,8 +35,7 @@ const CollectionComp = () => {
             </p>
           </div>
           <Carousel>
-            {coll.product.map((element: any) => {;
-
+            {coll.product.map((element: any) => {
               return (
                 <div>
                   <img className=" " src={element.image[0]} />

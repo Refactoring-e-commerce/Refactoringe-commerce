@@ -2,7 +2,6 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Mutation } from "react-query";
 
-
 export const signup = async (user: any) => {
   try {
     const response = await fetch("http://localhost:8080/users/signup", {
@@ -201,24 +200,29 @@ export const getAllCreator = () => {
   return query;
 };
 // =========================================================================== Raja
-export const getoneBrandProfile = () => {
+export const getoneBrandProfile = (brandId) => {
   const query = useQuery<Brand[]>({
     queryKey: ["Brand"],
     queryFn: async () => {
-      const result = await fetch("http://localhost:8080/brand/getone/1");
+      const result = await fetch(
+        `http://localhost:8080/brand/getone/${brandId}`
+      );
       const data = await result.json();
       return data;
-    }
+    },
   });
   return query;
 };
-export const getallCollectionbyBrand = () => {
+export const getallCollectionbyBrand = (brandId) => {
   const query = useQuery<Collection[]>({
     queryKey: ["collection"],
     queryFn: async () => {
-      const result = await fetch("http://localhost:8080/collection/by-brand/1");
+      const result = await fetch(
+        `http://localhost:8080/collection/by-brand/${brandId}`
+      );
       const data = await result.json();
-      return data.data;
+
+      return data;
     },
   });
   return query;
@@ -299,10 +303,10 @@ export const PostNewProduct = () => {
 //       return data;
 //     }
 //     // select: (data) => data,
-    
+
 //   });
 //   return query;
-// }; 
+// };
 
 const Addprod = async (productId: string) => {
   const response = await fetch(
@@ -315,14 +319,13 @@ const Addprod = async (productId: string) => {
       body: JSON.stringify({ productId: productId, userId: 1 }),
     }
   );
-  console.log(response)
+  console.log(response);
 };
 
 export const Addwallet = () => {
   return useMutation({
     mutationKey: ["Addprod"],
     mutationFn: Addprod,
-  
   });
 };
 const DeleteFromwallet = async (productId: string) => {
@@ -333,9 +336,9 @@ const DeleteFromwallet = async (productId: string) => {
       headers: {
         "Content-Type": "application/json",
       },
-    } 
+    }
   );
-  console.log(result)
+  console.log(result);
   // return result.json();
 };
 
@@ -343,10 +346,8 @@ export const deletewallet = () => {
   return useMutation({
     mutationKey: ["DeleteFromwallet"],
     mutationFn: DeleteFromwallet,
-  
   });
-}; 
-
+};
 
 // FavoriteList :
 

@@ -17,18 +17,18 @@ export const ItemIncomingHome = () => {
     <div className="z-20 ">
       <div className="flex flex-col lg-flex-row justify-center items-center mt-20 text-5 text-center">
         <h1
-          style={{ textShadow: "0 0 4px #00000070" }}
+          style={{ textShadow: "#5e5959 0px 0px 12px" }}
           className="text-[#734532] text-5xl md:text-black font-bold mb-3"
         >
           New - Trending
         </h1>
-        <p  className="flex flex-col m-6 md:text-white md:w-[600px]">
+        <p className="flex flex-col m-6 md:text-white text-xl md:w-[600px]">
           Discover unparalleled style with our latest and trending products,
           where innovation meets elegance in every piece.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 p-10   md:grid-cols-3 l  cursor-pointer gap-x-20">
+      <div className="flex p-10  cursor-pointer gap-x-20">
         {data?.slice(0, 6).map((product: any) => (
           <div
             key={product.id}
@@ -37,22 +37,21 @@ export const ItemIncomingHome = () => {
             <img
               src={product.image}
               alt={product.name}
-              className="w-full h-96  hover:scale-95 hover:opacity-80 transition-all hover:shadow-md object-cover mb-2 rounded-md"
+              className=" w-64  hover:scale-95 hover:opacity-80 transition-all hover:shadow-md object-cover mb-2 rounded-md"
             />
-            <div className="text-xs font-medium font-['Poppins'] text-gray-500 mb-1">
-              {product.category}
+            <div className="font-medium font-['Poppins'] text-gray-500 mb-1">
+              <strong> Category:</strong> {product.category}
             </div>
-            <div className="flex items-center justify-around">
-              <div className="text-lg   mb-1 ">
-                <strong>product: </strong>
-                {product.name}
+            <div className="flex font-medium items-center justify-start gap-28">
+              <div className=" font-['Poppins']   flex mb-1 ">
+                <strong> product: </strong> {product.name}
               </div>
               <div className="text-lg font-bold text-green-600">
                 ${product.price}
               </div>
             </div>
 
-            <div className="flex items-center">
+            <div className="flex items-center justify-around">
               <div>
                 <div
                   className="mr-4 "

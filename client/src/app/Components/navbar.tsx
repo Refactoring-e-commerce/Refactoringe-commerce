@@ -11,8 +11,7 @@ interface MyComponentProps {
   // Define the props here if there are any
 }
 
-const logout = (e: { preventDefault: () => void }) => {
-  e.preventDefault();
+const logout = () => {
   Cookies.remove("token");
 };
 
@@ -21,16 +20,17 @@ function MyComponent(props: MyComponentProps) {
 
   const token = Cookies.get("token");
   const userData: any = token ? jwtDecode(token) : null;
+
   const [showUser, setShowUser] = useState<Boolean>(false);
   const [showMore, setShowMore] = useState<Boolean>(false);
   return (
-    <div className="flex  border-b py-4  items-center shadow-md justify-around gap-11 max-md:flex-wrap ">
-      <div className="flex items-start center justify-between gap-10 px-5 max-md:max-w-full max-md:flex-wrap">
+    <div className="flex  border-b py-5 items-center shadow-md justify-around gap-11 max-md:flex-wrap ">
+      <div className="flex items-center  justify-between  gap-6 px-5 max-md:max-w-full max-md:flex-wrap">
         <Link
           href={"/"}
           className="text-lime-600 text-4xl font-bold self-center whitespace-nowrap"
         >
-          Logo
+          NeW-MoDa
         </Link>
         {pathname === "/AllProduct" && (
           <div className=" flex  relative items-center justify-between gap-4 px-4 py-3.5 rounded-[300px] border-[0.5px] border-solid border-white border-opacity-50 max-md:pr-5">
@@ -103,7 +103,7 @@ function MyComponent(props: MyComponentProps) {
       {userData && (
         <div className="flex items-start gap-2.5 px-5 self-start relative">
           {userData.role === "user" && (
-            <div>
+            <div className="flex items-center gap-4">
               <img
                 loading="lazy"
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/9f82c10f13384df40dd432f70ca57f1214f1fdc4941d8d52ea5a944683cac4b0?"

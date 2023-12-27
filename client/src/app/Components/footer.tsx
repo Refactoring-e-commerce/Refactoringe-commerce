@@ -4,8 +4,8 @@ import React from 'react';
 
 const Footer: React.FC = () => {
   return (
-    <footer className="dark:bg-gray-900 ">
-      <div className="mx-auto  w-full max-w-screen  py-6 lg:py-8">
+    <footer className="dark:bg-gray-900 z-20 relative">
+      <div className="mx-auto  w-full max-w-screen  py-6 lg:py-8 z-20">
         <div className="flex flex-col md:flex-row w-full">
           <div className="flex w-screen justify-around items-center">
             {/* Resources Section */}
